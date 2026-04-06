@@ -11,7 +11,7 @@ namespace StockManagement.Entity
     /// <summary>
     /// - Created after goods are received.
     /// // Contains product details, vendor info, and payment terms.
-    /// 
+    /// asdfasd
     /// asdfasd
     /// </summary>
     internal class InvoiceInfo
