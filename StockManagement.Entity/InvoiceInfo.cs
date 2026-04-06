@@ -14,5 +14,8 @@ namespace StockManagement.Entity
     /// </summary>
     internal class InvoiceInfo
     {
+
+        //hsllo
+        //byb yhe
     }
 }
