@@ -1,0 +1,48 @@
+﻿@model IEnumerable<StockManagement.Entity.Product>
+
+@{
+    ViewData["Title"] = "Product List";
+}
+
+<h2>Product List</h2>
+
+<p>
+    <a asp-action="CreateProduct" class="btn btn-primary">Add New Product</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Product Id</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+         {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.ProductId</td>
+                    <td>@item.ProductName</td>
+                    <td>@item.Price</td>
+                    <td>@item.Quantity</td>
+                    <td>
+                        <a asp-action="GetProductById" asp-route-id="@item.ProductId" class="btn btn-info">Details</a>
+                        <a asp-action="UpdateProduct" asp-route-id="@item.ProductId" class="btn btn-warning">Edit</a>
+                        <a asp-action="DeleteProduct" asp-route-id="@item.ProductId" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="5">No products available.</td>
+            </tr>
+        }
+    </tbody>
+</table>

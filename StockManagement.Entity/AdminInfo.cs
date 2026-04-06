@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StockManagement.Entity
 {
-
     /// <summary>
-    /// self master (super admin login)
-    /// self information
+      /// self master (super admin login)
+      /// self information
       /// all permissions to execute or perform any action
-    /// </summary>
+   /// </summary>
     public class AdminInfo
     {
         public int AdminId { get; set; }
