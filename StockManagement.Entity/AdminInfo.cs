@@ -4,11 +4,8 @@ using System.Linq;
 
 namespace StockManagement.Entity
 {
-    /// <summary>
-      /// self master (super admin login)
-      /// self information
-      /// all permissions to execute or perform any action
-   /// </summary>
+
+
     public class AdminInfo
     {
         public int AdminId { get; set; }
