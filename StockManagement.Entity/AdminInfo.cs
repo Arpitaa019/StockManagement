@@ -9,11 +9,15 @@ namespace StockManagement.Entity
 
     /// <summary>
     /// self master (super admin login)
-    /// 
+    /// self information
+      /// all permissions to execute or perform any action
     /// </summary>
-    internal class AdminInfo
+    public class AdminInfo
     {
-        //selft information
-        // all permietions to execute or perofmr any action
+        public int AdminId { get; set; }
+        public string Name { get; set; }
+       public string Password {  get; set; } 
+       public string Email {  get; set; }
+        public DateTime Created { get; set; }
     }
 }

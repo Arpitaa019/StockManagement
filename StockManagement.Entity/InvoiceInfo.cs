@@ -1,24 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StockManagement.Entity
 {
     /// <summary>
-    /// - Created after goods are received.
+    ///  Created after goods are received.
     /// // Contains product details, vendor info, and payment terms.
-    /// asdfasd
-    /// asdfasd
+    /// Represents invoice generated after DMR finalization.
     /// </summary>
-    internal class InvoiceInfo
+    public class InvoiceInfo
     {
-        //adsfasd
-        //ddd
-        //hsllo
-        //byb yhe
+        public int InvoiceId { get; set; }
+        public int DmrId {  get; set; }
+        public int VendorId {  get; set; }
+        public int TotalAmount {  get; set; }
+        public DateTime InvoiceDate {  get; set; }
+        public string CreatedBy {  get; set; }
+        public string Status {  get; set; }
     }
 }
