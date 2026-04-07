@@ -1,4 +1,5 @@
-﻿using StockManagement.Entity;
+using StockManagement.Entity;
+
 namespace StockManagement.Interface
 {
     public interface IProductRepository
@@ -9,6 +10,7 @@ namespace StockManagement.Interface
         void Update(Product entity);
         void Delete(int id);
     }
+
     public interface IProductService
     {
         Product? Get(int id);

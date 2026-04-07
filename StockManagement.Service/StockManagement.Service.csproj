@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\StockManagement.Entity\StockManagement.Entity.csproj" />
-    <ProjectReference Include="..\StockManagement.Infrastructure\StockManagement.Infrastructure.csproj" />
     <ProjectReference Include="..\StockManagement.Interface\StockManagement.Interface.csproj" />
     <ProjectReference Include="..\StockManagement.Repository\StockManagement.Repository.csproj" />
   </ItemGroup>
