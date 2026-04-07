@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\StockManagement.Entity\StockManagement.Entity.csproj" />
+    <ProjectReference Include="..\StockManagement.Infrastructure\StockManagement.Infrastructure.csproj" />
     <ProjectReference Include="..\StockManagement.Interface\StockManagement.Interface.csproj" />
     <ProjectReference Include="..\StockManagement.Repository\StockManagement.Repository.csproj" />
   </ItemGroup>

@@ -12,4 +12,8 @@
     <RootNamespace>Stock_Management</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\StockManagement.Service\StockManagement.Service.csproj" />
+  </ItemGroup>
+
 </Project>

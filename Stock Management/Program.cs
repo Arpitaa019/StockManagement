@@ -1,8 +1,15 @@
-using StockManagement.Interface;
-using StockManagement.Repository;
-using StockManagement.Service;
+using StockManagement.Entity.DataHelper;
+using StockManagement.Infrastructure.Implementation;
+using StockManagement.Infrastructure.Repo.Abstraction;
+using StockManagement.Service.Repo.Services;
+using StockManagement.Service.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
+builder.Services.AddScoped<DbHelper>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IProductService, ProductService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -69,8 +76,10 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+      pattern: "{controller=Product}/{action=Index}/{id?}"
+ );
 
 app.Run();
