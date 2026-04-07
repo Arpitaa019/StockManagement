@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using StockManagement.Entity;
 using StockManagement.Service.Repo.Services;
-using StockManagement.Service.Services;
 
 namespace Stock_Management.Controllers
 {
