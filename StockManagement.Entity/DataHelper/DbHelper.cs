@@ -15,7 +15,6 @@ namespace StockManagement.Entity.DataHelper
     /// DbHelper class to manage SQL Server connections and commands.
     /// Provides reusable methods for executing queries and stored procedures.
     /// </summary>
-
     public class DbHelper : IDisposable
     {
         private readonly string _connectionString;

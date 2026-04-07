@@ -23,6 +23,7 @@ namespace Stock_Management.Controllers
             var products = await _service.GetAllProducts();
             return Ok(products);
         }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetProductById(int id)
         {
@@ -38,20 +39,18 @@ namespace Stock_Management.Controllers
             return Ok("Product created successfully.");
         }
 
-        // PUT: api/product
         [HttpPut]
         public async Task<IActionResult> UpdateProduct([FromBody] Product product)
         {
             await _service.UpdateProduct(product);
             return Ok("Product updated successfully.");
         }
-        // DELETE: api/product/{id}
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
             await _service.DeleteProduct(id);
             return Ok("Product deleted successfully.");
         }
-
     }
 }
