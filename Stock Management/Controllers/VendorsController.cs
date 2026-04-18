@@ -55,7 +55,7 @@ namespace Stock_Management.Controllers
         public ActionResult Edit(int id, Vendor vendor)
         {
             if (!ModelState.IsValid) return View(vendor);
-            vendor.VendorId = id;
+            vendor.VendorId = vendor.VendorId > 0 ? vendor.VendorId : id;
             vendor.ModifiedDate = DateTime.Now;
             _service.Update(vendor);
             return RedirectToAction(nameof(Index));
