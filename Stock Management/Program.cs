@@ -71,6 +71,10 @@ builder.Services.AddScoped<ISapcodeService, SapcodeService>();
 builder.Services.AddScoped<IPurchaseRequestRepository>(_ => new PurchaseRequestRepository(connectionString));
 builder.Services.AddScoped<IPurchaseRequestService, PurchaseRequestService>();
 
+// PurchaseOrder
+builder.Services.AddScoped<IPurchaseOrderRepository>(_ => new PurchaseOrderRepository(connectionString));
+builder.Services.AddScoped<IPurchaseOrderService, PurchaseOrderService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
