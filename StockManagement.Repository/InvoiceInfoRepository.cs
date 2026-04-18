@@ -18,7 +18,7 @@ namespace StockManagement.Repository
             conn.Open();
             using var reader = cmd.ExecuteReader();
             if (reader.Read())
-                return new InvoiceMaster { InvoiceId = (int)reader["InvoiceId"], DmrId = (int)reader["DmrId"], VendorId = (int)reader["VendorId"], TotalAmount = (int)reader["TotalAmount"], InvoiceDate = (DateTime)reader["InvoiceDate"], CreatedBy = reader["CreatedBy"].ToString()!, Status = reader["Status"].ToString()! };
+                return new InvoiceMaster { InvoiceId = (int)reader["InvoiceId"], DmrId = (int)reader["DmrId"], VendorId = (int)reader["VendorId"], TotalAmount = Convert.ToDecimal(reader["TotalAmount"]), InvoiceDate = (DateTime)reader["InvoiceDate"], CreatedBy = reader["CreatedBy"] as string ?? string.Empty, Status = reader["Status"] as string ?? string.Empty };
             return null;
         }
 
@@ -30,7 +30,7 @@ namespace StockManagement.Repository
             conn.Open();
             using var reader = cmd.ExecuteReader();
             while (reader.Read())
-                list.Add(new InvoiceMaster { InvoiceId = (int)reader["InvoiceId"], DmrId = (int)reader["DmrId"], VendorId = (int)reader["VendorId"], TotalAmount = (int)reader["TotalAmount"], InvoiceDate = (DateTime)reader["InvoiceDate"], CreatedBy = reader["CreatedBy"].ToString()!, Status = reader["Status"].ToString()! });
+                list.Add(new InvoiceMaster { InvoiceId = (int)reader["InvoiceId"], DmrId = (int)reader["DmrId"], VendorId = (int)reader["VendorId"], TotalAmount = Convert.ToDecimal(reader["TotalAmount"]), InvoiceDate = (DateTime)reader["InvoiceDate"], CreatedBy = reader["CreatedBy"] as string ?? string.Empty, Status = reader["Status"] as string ?? string.Empty });
             return list;
         }
 

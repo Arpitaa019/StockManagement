@@ -14,7 +14,7 @@ namespace StockManagement.Entity
         public int InvoiceId { get; set; }
         public int DmrId {  get; set; }
         public int VendorId {  get; set; }
-        public int TotalAmount {  get; set; }
+        public decimal TotalAmount {  get; set; }
         public DateTime InvoiceDate {  get; set; }
         public string CreatedBy {  get; set; }
         public string Status {  get; set; }
