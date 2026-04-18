@@ -3,10 +3,10 @@ namespace StockManagement.Interface
 {
     public interface IInvoiceInfoService
     {
-        InvoiceInfo? Get(int id);
-        IEnumerable<InvoiceInfo> GetAll();
-        void Create(InvoiceInfo entity);
-        void Update(InvoiceInfo entity);
+        InvoiceMaster? Get(int id);
+        IEnumerable<InvoiceMaster> GetAll();
+        void Create(InvoiceMaster entity);
+        void Update(InvoiceMaster entity);
         void Delete(int id);
     }
 }

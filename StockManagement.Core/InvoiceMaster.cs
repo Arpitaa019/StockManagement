@@ -9,7 +9,7 @@ namespace StockManagement.Entity
     /// // Contains product details, vendor info, and payment terms.
     /// Represents invoice generated after DMR finalization.
     /// </summary>
-    public class InvoiceInfo
+    public class InvoiceMaster 
     {
         public int InvoiceId { get; set; }
         public int DmrId {  get; set; }

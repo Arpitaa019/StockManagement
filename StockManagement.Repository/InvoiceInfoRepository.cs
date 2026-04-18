@@ -10,7 +10,7 @@ namespace StockManagement.Repository
         private readonly string _connectionString;
         public InvoiceInfoRepository(string connectionString) { _connectionString = connectionString; }
 
-        public InvoiceInfo? GetById(int id)
+        public InvoiceMaster? GetById(int id)
         {
             using var conn = new SqlConnection(_connectionString);
             using var cmd = new SqlCommand("sp_GetInvoiceInfoById", conn) { CommandType = CommandType.StoredProcedure };
@@ -18,23 +18,23 @@ namespace StockManagement.Repository
             conn.Open();
             using var reader = cmd.ExecuteReader();
             if (reader.Read())
-                return new InvoiceInfo { InvoiceId = (int)reader["InvoiceId"], DmrId = (int)reader["DmrId"], VendorId = (int)reader["VendorId"], TotalAmount = (int)reader["TotalAmount"], InvoiceDate = (DateTime)reader["InvoiceDate"], CreatedBy = reader["CreatedBy"].ToString()!, Status = reader["Status"].ToString()! };
+                return new InvoiceMaster { InvoiceId = (int)reader["InvoiceId"], DmrId = (int)reader["DmrId"], VendorId = (int)reader["VendorId"], TotalAmount = (int)reader["TotalAmount"], InvoiceDate = (DateTime)reader["InvoiceDate"], CreatedBy = reader["CreatedBy"].ToString()!, Status = reader["Status"].ToString()! };
             return null;
         }
 
-        public IEnumerable<InvoiceInfo> GetAll()
+        public IEnumerable<InvoiceMaster> GetAll()
         {
-            var list = new List<InvoiceInfo>();
+            var list = new List<InvoiceMaster>();
             using var conn = new SqlConnection(_connectionString);
             using var cmd = new SqlCommand("sp_GetAllInvoiceInfo", conn) { CommandType = CommandType.StoredProcedure };
             conn.Open();
             using var reader = cmd.ExecuteReader();
             while (reader.Read())
-                list.Add(new InvoiceInfo { InvoiceId = (int)reader["InvoiceId"], DmrId = (int)reader["DmrId"], VendorId = (int)reader["VendorId"], TotalAmount = (int)reader["TotalAmount"], InvoiceDate = (DateTime)reader["InvoiceDate"], CreatedBy = reader["CreatedBy"].ToString()!, Status = reader["Status"].ToString()! });
+                list.Add(new InvoiceMaster { InvoiceId = (int)reader["InvoiceId"], DmrId = (int)reader["DmrId"], VendorId = (int)reader["VendorId"], TotalAmount = (int)reader["TotalAmount"], InvoiceDate = (DateTime)reader["InvoiceDate"], CreatedBy = reader["CreatedBy"].ToString()!, Status = reader["Status"].ToString()! });
             return list;
         }
 
-        public void Add(InvoiceInfo entity)
+        public void Add(InvoiceMaster entity)
         {
             using var conn = new SqlConnection(_connectionString);
             using var cmd = new SqlCommand("sp_AddInvoiceInfo", conn) { CommandType = CommandType.StoredProcedure };
@@ -47,7 +47,7 @@ namespace StockManagement.Repository
             conn.Open(); cmd.ExecuteNonQuery();
         }
 
-        public void Update(InvoiceInfo entity)
+        public void Update(InvoiceMaster entity)
         {
             using var conn = new SqlConnection(_connectionString);
             using var cmd = new SqlCommand("sp_UpdateInvoiceInfo", conn) { CommandType = CommandType.StoredProcedure };

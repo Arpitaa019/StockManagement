@@ -1,0 +1,51 @@
+@model IEnumerable<StockManagement.Entity.InvoiceMaster>
+
+@{
+    ViewBag.Title = "Invoices";
+}
+
+<h2>Invoices</h2>
+<p><a href="@Url.Action("Create", "Invoice")" class="btn btn-primary">+ New Invoice</a></p>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Invoice ID</th>
+            <th>DMR ID</th>
+            <th>Vendor ID</th>
+            <th>Invoice Date</th>
+            <th>Total Amount</th>
+            <th>Created By</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{int row = 1;}
+        @foreach (var inv in Model)
+        {
+            <tr>
+                <td>@row++</td>
+                <td>@inv.InvoiceId</td>
+                <td>@inv.DmrId</td>
+                <td>@inv.VendorId</td>
+                <td>@inv.InvoiceDate.ToString("dd-MM-yyyy")</td>
+                <td>@inv.TotalAmount.ToString("N2")</td>
+                <td>@inv.CreatedBy</td>
+                <td>
+                    <span class="badge @(inv.Status == "Paid" ? "bg-success" :
+                                         inv.Status == "Cancelled" ? "bg-danger" :
+                                         inv.Status == "Overdue" ? "bg-warning text-dark" : "bg-secondary")">
+                        @inv.Status
+                    </span>
+                </td>
+                <td>
+                    <a href="@Url.Action("Details", "Invoice", new { id = inv.InvoiceId })" class="btn btn-sm btn-info">Details</a>
+                    <a href="@Url.Action("Edit", "Invoice", new { id = inv.InvoiceId })" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="@Url.Action("Delete", "Invoice", new { id = inv.InvoiceId })" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

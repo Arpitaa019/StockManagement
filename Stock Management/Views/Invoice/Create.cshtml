@@ -1,0 +1,81 @@
+@model StockManagement.Entity.InvoiceMaster
+
+@{
+    ViewBag.Title = "Create Invoice";
+    var statusList = new SelectList(new[] { "Pending", "Paid", "Overdue", "Cancelled" });
+    var dmrList    = ViewBag.DmrList    as List<StockManagement.Entity.DailyMaterialInfo>    ?? new();
+    var vendorList = ViewBag.VendorList as List<StockManagement.Core.Vendor> ?? new();
+}
+
+<h2>Create Invoice</h2>
+
+@using (Html.BeginForm("Create", "Invoice", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Invoice Information</h4>
+        <hr />
+
+        <div class="form-group row mb-3">
+            <div class="col-md-4">
+                <label>DMR</label>
+                <select name="DmrId" class="form-control">
+                    <option value="0">-- Select DMR --</option>
+                    @foreach (var dmr in dmrList)
+                    {
+                        if (Model.DmrId == dmr.DmrId)
+                        {
+                            <option value="@dmr.DmrId" selected="selected">DMR-@dmr.DmrId (@dmr.DeliveryDate.ToString("dd-MM-yyyy"))</option>
+                        }
+                        else
+                        {
+                            <option value="@dmr.DmrId">DMR-@dmr.DmrId (@dmr.DeliveryDate.ToString("dd-MM-yyyy"))</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label>Vendor</label>
+                <select name="VendorId" class="form-control">
+                    <option value="0">-- Select Vendor --</option>
+                    @foreach (var v in vendorList)
+                    {
+                        if (Model.VendorId == v.VendorId)
+                        {
+                            <option value="@v.VendorId" selected="selected">@v.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@v.VendorId">@v.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col-md-4">
+                @Html.LabelFor(m => m.InvoiceDate)
+                @Html.TextBoxFor(m => m.InvoiceDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+            </div>
+        </div>
+
+        <div class="form-group row mb-3">
+            <div class="col-md-4">
+                @Html.LabelFor(m => m.TotalAmount)
+                @Html.TextBoxFor(m => m.TotalAmount, new { @class = "form-control", type = "number", step = "1" })
+            </div>
+            <div class="col-md-4">
+                @Html.LabelFor(m => m.CreatedBy)
+                @Html.TextBoxFor(m => m.CreatedBy, new { @class = "form-control" })
+            </div>
+            <div class="col-md-4">
+                @Html.LabelFor(m => m.Status)
+                @Html.DropDownListFor(m => m.Status, statusList, "Select Status", new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group mt-3">
+            <input type="submit" value="Save" class="btn btn-primary" />
+            <a href="@Url.Action("Index", "Invoice")" class="btn btn-secondary">Cancel</a>
+        </div>
+    </div>
+}
