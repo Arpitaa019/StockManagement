@@ -1,0 +1,39 @@
+@model IEnumerable<StockManagement.Entity.IMRCumulative>
+
+@{
+    ViewBag.Title = "IMR Cumulative";
+}
+
+<h2>IMR Cumulative</h2>
+<p><a href="@Url.Action("Create")" class="btn btn-primary">+ New Entry</a></p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>IMR</th>
+            <th>Quantity</th>
+            <th>Remarks</th>
+            <th>Created Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ int i = 1; }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@i++</td>
+                <td>@item.ImrId</td>
+                <td>@item.Quantity</td>
+                <td>@item.Remarks</td>
+                <td>@item.CreatedDate.ToString("yyyy-MM-dd HH:mm")</td>
+                <td>
+                    <a href="@Url.Action("Details", new { id = item.ImrCumulativeId })" class="btn btn-sm btn-info">Details</a>
+                    <a href="@Url.Action("Edit", new { id = item.ImrCumulativeId })" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="@Url.Action("Delete", new { id = item.ImrCumulativeId })" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

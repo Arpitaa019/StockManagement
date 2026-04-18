@@ -1,0 +1,25 @@
+@model StockManagement.Entity.IMRCumulative
+
+@{
+    ViewBag.Title = "IMR Cumulative Details";
+}
+
+<h2>IMR Cumulative Details</h2>
+<div class="card">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">IMR</dt>
+            <dd class="col-sm-9">@Model.ImrId</dd>
+
+            <dt class="col-sm-3">Quantity</dt>
+            <dd class="col-sm-9">@Model.Quantity</dd>
+
+            <dt class="col-sm-3">Remarks</dt>
+            <dd class="col-sm-9">@Model.Remarks</dd>
+
+            <dt class="col-sm-3">Created Date</dt>
+            <dd class="col-sm-9">@Model.CreatedDate.ToString("yyyy-MM-dd HH:mm")</dd>
+        </dl>
+        <a href="@Url.Action("Index")" class="btn btn-secondary">Back</a>
+    </div>
+</div>

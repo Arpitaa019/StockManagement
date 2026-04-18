@@ -1,0 +1,29 @@
+@model StockManagement.Entity.IMRCumulative
+
+@{
+    ViewBag.Title = "Delete IMR Cumulative";
+}
+
+<h2>Delete IMR Cumulative</h2>
+
+<div class="alert alert-danger">Are you sure you want to delete this record?</div>
+<div>
+    <dl class="row">
+        <dt class="col-sm-3">IMR</dt>
+        <dd class="col-sm-9">@Model.ImrId</dd>
+
+        <dt class="col-sm-3">Quantity</dt>
+        <dd class="col-sm-9">@Model.Quantity</dd>
+
+        <dt class="col-sm-3">Remarks</dt>
+        <dd class="col-sm-9">@Model.Remarks</dd>
+    </dl>
+</div>
+
+@using (Html.BeginForm("Delete", "IMRCumulative", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.ImrCumulativeId)
+    <input type="submit" value="Delete" class="btn btn-danger" />
+    <a href="@Url.Action("Index")" class="btn btn-secondary">Cancel</a>
+}
