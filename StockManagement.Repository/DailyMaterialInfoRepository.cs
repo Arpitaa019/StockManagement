@@ -10,7 +10,7 @@ namespace StockManagement.Repository
         private readonly string _connectionString;
         public DailyMaterialInfoRepository(string connectionString) { _connectionString = connectionString; }
 
-        public DailyMaterialInfo? GetById(int id)
+        public DMRMaster? GetById(int id)
         {
             using var conn = new SqlConnection(_connectionString);
             using var cmd = new SqlCommand("sp_GetDailyMaterialInfoById", conn) { CommandType = CommandType.StoredProcedure };
@@ -18,23 +18,23 @@ namespace StockManagement.Repository
             conn.Open();
             using var reader = cmd.ExecuteReader();
             if (reader.Read())
-                return new DailyMaterialInfo { DmrId = (int)reader["DmrId"], VendorId = (int)reader["VendorId"], DeliveryDate = (DateTime)reader["DeliveryDate"], ApprovedBy = reader["ApprovedBy"].ToString()!, IsFinalized = (bool)reader["IsFinalized"], FinalizedDate = reader["FinalizedDate"] as DateTime?, Remarks = reader["Remarks"].ToString() };
+                return new DMRMaster { DmrId = (int)reader["DmrId"], VendorId = (int)reader["VendorId"], DeliveryDate = (DateTime)reader["DeliveryDate"], ApprovedBy = reader["ApprovedBy"].ToString()!, IsFinalized = (bool)reader["IsFinalized"], FinalizedDate = reader["FinalizedDate"] as DateTime?, Remarks = reader["Remarks"].ToString() };
             return null;
         }
 
-        public IEnumerable<DailyMaterialInfo> GetAll()
+        public IEnumerable<DMRMaster> GetAll()
         {
-            var list = new List<DailyMaterialInfo>();
+            var list = new List<DMRMaster>();
             using var conn = new SqlConnection(_connectionString);
             using var cmd = new SqlCommand("sp_GetAllDailyMaterialInfo", conn) { CommandType = CommandType.StoredProcedure };
             conn.Open();
             using var reader = cmd.ExecuteReader();
             while (reader.Read())
-                list.Add(new DailyMaterialInfo { DmrId = (int)reader["DmrId"], VendorId = (int)reader["VendorId"], DeliveryDate = (DateTime)reader["DeliveryDate"], ApprovedBy = reader["ApprovedBy"].ToString()!, IsFinalized = (bool)reader["IsFinalized"], FinalizedDate = reader["FinalizedDate"] as DateTime?, Remarks = reader["Remarks"].ToString() });
+                list.Add(new DMRMaster { DmrId = (int)reader["DmrId"], VendorId = (int)reader["VendorId"], DeliveryDate = (DateTime)reader["DeliveryDate"], ApprovedBy = reader["ApprovedBy"].ToString()!, IsFinalized = (bool)reader["IsFinalized"], FinalizedDate = reader["FinalizedDate"] as DateTime?, Remarks = reader["Remarks"].ToString() });
             return list;
         }
 
-        public void Add(DailyMaterialInfo entity)
+        public void Add(DMRMaster entity)
         {
             using var conn = new SqlConnection(_connectionString);
             using var cmd = new SqlCommand("sp_AddDailyMaterialInfo", conn) { CommandType = CommandType.StoredProcedure };
@@ -47,7 +47,7 @@ namespace StockManagement.Repository
             conn.Open(); cmd.ExecuteNonQuery();
         }
 
-        public void Update(DailyMaterialInfo entity)
+        public void Update(DMRMaster entity)
         {
             using var conn = new SqlConnection(_connectionString);
             using var cmd = new SqlCommand("sp_UpdateDailyMaterialInfo", conn) { CommandType = CommandType.StoredProcedure };

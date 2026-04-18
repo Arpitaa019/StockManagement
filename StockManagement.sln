@@ -5,11 +5,11 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockManagement", "Stock Management\StockManagement.csproj", "{55BFF11F-0E86-4ECB-8F9D-1FC2EFB8A516}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockManagement.Services", "StockManagement.Service\StockManagement.Services.csproj", "{22C7317A-7B7E-4F43-BC37-0ED21D20823C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockManagement.Services", "StockManagement.Service\StockManagement.Services.csproj", "{22C7317A-7B7E-4F43-BC37-0ED21D20823C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockManagement.Repository", "StockManagement.Repository\StockManagement.Repository.csproj", "{171542A2-9C1A-B265-C13C-8AF7DD2E8D3B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockManagement.Repository", "StockManagement.Repository\StockManagement.Repository.csproj", "{171542A2-9C1A-B265-C13C-8AF7DD2E8D3B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockManagement.Core", "StockManagement.Core\StockManagement.Core.csproj", "{4BD4F826-6BD7-3B8C-B711-927E38E4240E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockManagement.Core", "StockManagement.Core\StockManagement.Core.csproj", "{4BD4F826-6BD7-3B8C-B711-927E38E4240E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -3,14 +3,13 @@ using System.Collections.Generic;
 
 namespace StockManagement.Entity
 {
-
   /// <summary>
-    /// DMR (Delivery Material Report)
-    // Master + Detail records when goods arrive.
-   // Automatic process: once delivery is confirmed, system generates DMR.
-   // Properties: ApprovedBy, IsFinalize.
+     /// DMR (Delivery Material Report)
+     /// Master + Detail records when goods arrive.
+     /// Automatic process: once delivery is confirmed, system generates DMR.
+      /// Properties: ApprovedBy, IsFinalize.
   /// </summary>
-    public class DailyMaterialInfo
+    public class DMRMaster
     {
         public int DmrId { get; set; }               // Unique identifier
         public int VendorId { get; set; }            // Vendor delivering goods
