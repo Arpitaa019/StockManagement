@@ -59,6 +59,10 @@ builder.Services.AddScoped<IDailyMaterialInfoService, DailyMaterialInfoService>(
 builder.Services.AddScoped<IDailyMaterialDetailRepository>(_ => new DailyMaterialDetailRepository(connectionString));
 builder.Services.AddScoped<IDailyMaterialDetailService, DailyMaterialDetailService>();
 
+// Vendor
+builder.Services.AddScoped<IVendorRepository>(_ => new VendorRepository(connectionString));
+builder.Services.AddScoped<IVendorService, VendorService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

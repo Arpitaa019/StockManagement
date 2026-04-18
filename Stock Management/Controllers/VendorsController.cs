@@ -1,83 +1,81 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using StockManagement.Core;
+using StockManagement.Interface;
 
 namespace Stock_Management.Controllers
 {
     public class VendorsController : Controller
     {
-        // GET: VendorsController
+        private readonly IVendorService _service;
+        public VendorsController(IVendorService service) { _service = service; }
+
+        // GET: Vendors
         public ActionResult Index()
         {
-            return View();
+            var vendors = _service.GetAll();
+            return View(vendors);
         }
 
-        // GET: VendorsController/Details/5
+        // GET: Vendors/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var vendor = _service.Get(id);
+            if (vendor == null) return NotFound();
+            return View(vendor);
         }
 
-        // GET: VendorsController/Create
+        // GET: Vendors/Create
         public ActionResult Create()
         {
-            return View();
+            return View(new Vendor { CreatedDate = DateTime.Today, IsActive = true });
         }
 
-        // POST: VendorsController/Create
+        // POST: Vendors/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Vendor vendor)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            if (!ModelState.IsValid) return View(vendor);
+            vendor.CreatedDate = DateTime.Now;
+            _service.Create(vendor);
+            return RedirectToAction(nameof(Index));
         }
 
-        // GET: VendorsController/Edit/5
+        // GET: Vendors/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var vendor = _service.Get(id);
+            if (vendor == null) return NotFound();
+            return View(vendor);
         }
 
-        // POST: VendorsController/Edit/5
+        // POST: Vendors/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, Vendor vendor)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            if (!ModelState.IsValid) return View(vendor);
+            vendor.VendorId = id;
+            vendor.ModifiedDate = DateTime.Now;
+            _service.Update(vendor);
+            return RedirectToAction(nameof(Index));
         }
 
-        // GET: VendorsController/Delete/5
+        // GET: Vendors/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var vendor = _service.Get(id);
+            if (vendor == null) return NotFound();
+            return View(vendor);
         }
 
-        // POST: VendorsController/Delete/5
-        [HttpPost]
+        // POST: Vendors/Delete/5
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult DeleteConfirmed(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            _service.Delete(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

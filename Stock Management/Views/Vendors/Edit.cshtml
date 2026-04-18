@@ -1,24 +1,26 @@
-﻿@model StockManagement.Core.Vendor
+@model StockManagement.Core.Vendor
 
 @{
-    ViewBag.Title = "Create Vendor";
+    ViewBag.Title = "Edit Vendor";
 }
 
-<h2>Create Vendor</h2>
+<h2>Edit Vendor</h2>
 
-@using (Html.BeginForm("Create", "Vendors", FormMethod.Post))
+@using (Html.BeginForm("Edit", "Vendors", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.VendorId)
+    @Html.HiddenFor(m => m.CreatedDate)
 
     <div class="form-horizontal">
         <h4>Vendor</h4>
         <hr />
 
-        <!-- Row 1 -->
         <div class="form-group row">
             <div class="col-md-4">
                 @Html.LabelFor(m => m.Name)
                 @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Name)
             </div>
             <div class="col-md-4">
                 @Html.LabelFor(m => m.Contact)
@@ -30,7 +32,6 @@
             </div>
         </div>
 
-        <!-- Row 2 -->
         <div class="form-group row">
             <div class="col-md-4">
                 @Html.LabelFor(m => m.Email)
@@ -46,7 +47,6 @@
             </div>
         </div>
 
-        <!-- Row 3 -->
         <div class="form-group row">
             <div class="col-md-4">
                 @Html.LabelFor(m => m.PANNumber)
@@ -62,7 +62,6 @@
             </div>
         </div>
 
-        <!-- Row 4 -->
         <div class="form-group row">
             <div class="col-md-4">
                 @Html.LabelFor(m => m.Country)
@@ -78,7 +77,6 @@
             </div>
         </div>
 
-        <!-- Row 5 -->
         <div class="form-group row">
             <div class="col-md-4">
                 @Html.LabelFor(m => m.PostalCode)
@@ -87,9 +85,9 @@
             <div class="col-md-4">
                 @Html.LabelFor(m => m.VendorType)
                 @Html.DropDownListFor(m => m.VendorType,
-                         new SelectList(new[] { "Manufacturer", "Supplier", "Contractor" }),
-                         "Select Type",
-                         new { @class = "form-control" })
+                    new SelectList(new[] { "Manufacturer", "Supplier", "Contractor" }),
+                    "Select Type",
+                    new { @class = "form-control" })
             </div>
             <div class="col-md-4">
                 @Html.LabelFor(m => m.IsActive)
@@ -97,20 +95,9 @@
             </div>
         </div>
 
-        <!-- Row 6 -->
-        <div class="form-group row">
-            <div class="col-md-6">
-                @Html.LabelFor(m => m.CreatedDate)
-                @Html.TextBoxFor(m => m.CreatedDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
-            </div>
-            <div class="col-md-6">
-                @Html.LabelFor(m => m.ModifiedDate)
-                @Html.TextBoxFor(m => m.ModifiedDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
-            </div>
-        </div>
-
         <div class="form-group">
-            <input type="submit" value="Save" class="btn btn-primary" />
+            <input type="submit" value="Save Changes" class="btn btn-primary" />
+            <a href="@Url.Action("Index", "Vendors")" class="btn btn-secondary">Cancel</a>
         </div>
     </div>
 }

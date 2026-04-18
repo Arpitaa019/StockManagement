@@ -1,0 +1,64 @@
+@model StockManagement.Core.Vendor
+
+@{
+    ViewBag.Title = "Vendor Details";
+}
+
+<h2>Vendor Details</h2>
+<hr />
+
+<dl class="row">
+    <dt class="col-sm-3">Name</dt>
+    <dd class="col-sm-9">@Model.Name</dd>
+
+    <dt class="col-sm-3">Contact</dt>
+    <dd class="col-sm-9">@Model.Contact</dd>
+
+    <dt class="col-sm-3">Address</dt>
+    <dd class="col-sm-9">@Model.Address</dd>
+
+    <dt class="col-sm-3">Email</dt>
+    <dd class="col-sm-9">@Model.Email</dd>
+
+    <dt class="col-sm-3">Phone</dt>
+    <dd class="col-sm-9">@Model.Phone</dd>
+
+    <dt class="col-sm-3">GST Number</dt>
+    <dd class="col-sm-9">@Model.GSTNumber</dd>
+
+    <dt class="col-sm-3">PAN Number</dt>
+    <dd class="col-sm-9">@Model.PANNumber</dd>
+
+    <dt class="col-sm-3">Bank Account</dt>
+    <dd class="col-sm-9">@Model.BankAccount</dd>
+
+    <dt class="col-sm-3">IFSC Code</dt>
+    <dd class="col-sm-9">@Model.IFSCCode</dd>
+
+    <dt class="col-sm-3">Country</dt>
+    <dd class="col-sm-9">@Model.Country</dd>
+
+    <dt class="col-sm-3">State</dt>
+    <dd class="col-sm-9">@Model.State</dd>
+
+    <dt class="col-sm-3">City</dt>
+    <dd class="col-sm-9">@Model.City</dd>
+
+    <dt class="col-sm-3">Postal Code</dt>
+    <dd class="col-sm-9">@Model.PostalCode</dd>
+
+    <dt class="col-sm-3">Vendor Type</dt>
+    <dd class="col-sm-9">@Model.VendorType</dd>
+
+    <dt class="col-sm-3">Active</dt>
+    <dd class="col-sm-9">@(Model.IsActive ? "Yes" : "No")</dd>
+
+    <dt class="col-sm-3">Created Date</dt>
+    <dd class="col-sm-9">@Model.CreatedDate.ToString("dd-MM-yyyy")</dd>
+
+    <dt class="col-sm-3">Modified Date</dt>
+    <dd class="col-sm-9">@(Model.ModifiedDate.HasValue ? Model.ModifiedDate.Value.ToString("dd-MM-yyyy") : "-")</dd>
+</dl>
+
+<a href="@Url.Action("Edit", "Vendors", new { id = Model.VendorId })" class="btn btn-warning">Edit</a>
+<a href="@Url.Action("Index", "Vendors")" class="btn btn-secondary">Back to List</a>
