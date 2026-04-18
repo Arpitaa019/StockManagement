@@ -5,7 +5,6 @@ using System.Linq;
 namespace StockManagement.Entity
 {
 
-
     public class AdminInfo
     {
         public int AdminId { get; set; }

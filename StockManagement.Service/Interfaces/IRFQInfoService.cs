@@ -1,4 +1,5 @@
 using StockManagement.Entity;
+
 namespace StockManagement.Interface
 {
     public interface IRFQInfoService

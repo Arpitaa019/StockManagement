@@ -7,6 +7,7 @@ namespace StockManagement.Service
     {
         private readonly IUserRepository _repo;
         public UserService(IUserRepository repo) { _repo = repo; }
+
         public User? Get(int id) => _repo.GetById(id);
         public IEnumerable<User> GetAll() => _repo.GetAll();
         public void Create(User entity) => _repo.Add(entity);

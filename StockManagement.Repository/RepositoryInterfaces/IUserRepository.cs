@@ -1,4 +1,5 @@
 ﻿using StockManagement.Entity;
+using StockManagement.Entity;
 namespace StockManagement.Interface
 {
     public interface IUserRepository
