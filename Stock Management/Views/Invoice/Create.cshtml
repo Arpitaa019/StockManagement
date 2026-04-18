@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Create Invoice";
     var statusList = new SelectList(new[] { "Pending", "Paid", "Overdue", "Cancelled" });
-    var dmrList    = ViewBag.DmrList    as List<StockManagement.Entity.DailyMaterialInfo>    ?? new();
+    var dmrList    = ViewBag.DmrList    as List<StockManagement.Entity.DMRMaster>    ?? new();
     var vendorList = ViewBag.VendorList as List<StockManagement.Core.Vendor> ?? new();
 }
 

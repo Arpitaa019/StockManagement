@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Delete Invoice";
-    var dmrList    = ViewBag.DmrList    as List<StockManagement.Entity.DailyMaterialInfo>    ?? new();
+    var dmrList    = ViewBag.DmrList    as List<StockManagement.Entity.DMRMaster>    ?? new();
     var vendorList = ViewBag.VendorList as List<StockManagement.Core.Vendor> ?? new();
     var vendor     = vendorList.FirstOrDefault(v => v.VendorId == Model.VendorId);
     var dmr        = dmrList.FirstOrDefault(d => d.DmrId == Model.DmrId);
