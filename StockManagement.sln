@@ -5,9 +5,9 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockManagement", "Stock Management\StockManagement.csproj", "{55BFF11F-0E86-4ECB-8F9D-1FC2EFB8A516}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockManagement.Entity", "StockManagement.Entity\StockManagement.Entity.csproj", "{547D6035-6B95-4FA7-B8F4-2AC44391FA8C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StockManagement.Core", "StockManagement.Entity\StockManagement.Core.csproj", "{547D6035-6B95-4FA7-B8F4-2AC44391FA8C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockManagement.Service", "StockManagement.Service\StockManagement.Service.csproj", "{22C7317A-7B7E-4F43-BC37-0ED21D20823C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockManagement.Services", "StockManagement.Service\StockManagement.Services.csproj", "{22C7317A-7B7E-4F43-BC37-0ED21D20823C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockManagement.Repository", "StockManagement.Repository\StockManagement.Repository.csproj", "{171542A2-9C1A-B265-C13C-8AF7DD2E8D3B}"
 EndProject

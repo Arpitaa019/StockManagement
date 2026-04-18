@@ -9,7 +9,6 @@ namespace StockManagement.Repository
     {
         private readonly string _connectionString;
         public AdminInfoRepository(string connectionString) { _connectionString = connectionString; }
-
         public AdminInfo? GetById(int id)
         {
             using var conn = new SqlConnection(_connectionString);

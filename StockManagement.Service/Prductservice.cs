@@ -1,7 +1,8 @@
 ﻿using StockManagement.Entity;
 using StockManagement.Interface;
+using StockManagement.Services.Interfaces;
 
-namespace StockManagement.Service.Services
+namespace StockManagement.Services
 {
     public class ProductService : IProductService
     {
@@ -22,5 +23,30 @@ namespace StockManagement.Service.Services
             _repo.Update(entity);
         }
         public void Delete(int id) => _repo.Delete(id);
+
+        public Task CreateProduct(Product product)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteProduct(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<Product>> GetAllProducts()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Product> GetProductById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateProduct(Product product)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

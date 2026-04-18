@@ -2,6 +2,8 @@ using StockManagement.Entity.DataHelper;
 using StockManagement.Interface;
 using StockManagement.Repository;
 using StockManagement.Service;
+using StockManagement.Services;
+using StockManagement.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,6 +1,6 @@
 using StockManagement.Entity;
 
-namespace StockManagement.Service.Repo.Services
+namespace StockManagement.Services.Interfaces
 {
     public interface IProductService
     {
@@ -10,4 +10,5 @@ namespace StockManagement.Service.Repo.Services
         Task<Product> GetProductById(int id);
         Task UpdateProduct(Product product);
     }
+ 
 }
