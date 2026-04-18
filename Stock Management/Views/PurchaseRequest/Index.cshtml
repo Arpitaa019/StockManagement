@@ -1,0 +1,47 @@
+@model IEnumerable<StockManagement.Core.PurchaseRequestMaster>
+
+@{
+    ViewBag.Title = "Purchase Requests";
+}
+
+<h2>Purchase Requests</h2>
+<p><a href="@Url.Action("Create", "PurchaseRequest")" class="btn btn-primary">+ New Purchase Request</a></p>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>PR Number</th>
+            <th>Request Date</th>
+            <th>Requested By</th>
+            <th>Department</th>
+            <th>Status</th>
+            <th>Total Amount</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var pr in Model)
+        {
+            <tr>
+                <td>@pr.PRId</td>
+                <td>@pr.PRNumber</td>
+                <td>@pr.RequestDate.ToString("dd-MM-yyyy")</td>
+                <td>@pr.RequestedBy</td>
+                <td>@pr.Department</td>
+                <td>
+                    <span class="badge @(pr.Status == "Approved" ? "bg-success" :
+                                         pr.Status == "Rejected" ? "bg-danger" : "bg-warning text-dark")">
+                        @pr.Status
+                    </span>
+                </td>
+                <td>@pr.TotalAmount.ToString("N2")</td>
+                <td>
+                    <a href="@Url.Action("Details", "PurchaseRequest", new { id = pr.PRId })" class="btn btn-sm btn-info">Details</a>
+                    <a href="@Url.Action("Edit", "PurchaseRequest", new { id = pr.PRId })" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="@Url.Action("Delete", "PurchaseRequest", new { id = pr.PRId })" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
