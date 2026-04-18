@@ -1,0 +1,52 @@
+@model IEnumerable<StockManagement.Core.Sapcode>
+
+@{
+    ViewBag.Title = "SAP Codes";
+}
+
+<h2>SAP Codes</h2>
+<p><a href="@Url.Action("Create", "Sapcode")" class="btn btn-primary">+ Add SAP Code</a></p>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Item Code No</th>
+            <th>Item Type</th>
+            <th>Material</th>
+            <th>Size (Inch)</th>
+            <th>Weight</th>
+            <th>UOM</th>
+            <th>Required Qty</th>
+            <th>Allocated Qty</th>
+            <th>Issued Qty</th>
+            <th>Location</th>
+            <th>Active</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ItemCodeDescriptionMasterId</td>
+                <td>@item.ItemCodeNo</td>
+                <td>@item.ItemType</td>
+                <td>@item.Material</td>
+                <td>@item.SizeInch</td>
+                <td>@item.Weight</td>
+                <td>@item.UnitOfMeasure</td>
+                <td>@item.RequiredQty</td>
+                <td>@item.AllocatedQty</td>
+                <td>@item.IssuedQty</td>
+                <td>@item.Location</td>
+                <td>@(item.IsActive ? "Yes" : "No")</td>
+                <td>
+                    <a href="@Url.Action("Details", "Sapcode", new { id = item.ItemCodeDescriptionMasterId })" class="btn btn-sm btn-info">Details</a>
+                    <a href="@Url.Action("Edit", "Sapcode", new { id = item.ItemCodeDescriptionMasterId })" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="@Url.Action("Delete", "Sapcode", new { id = item.ItemCodeDescriptionMasterId })" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

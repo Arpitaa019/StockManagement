@@ -1,0 +1,33 @@
+@model StockManagement.Core.Sapcode
+
+@{
+    ViewBag.Title = "Delete SAP Code";
+}
+
+<h2>Delete SAP Code</h2>
+<p class="text-danger">Are you sure you want to delete this SAP Code?</p>
+<hr />
+
+<dl class="row">
+    <dt class="col-sm-3">Item Code No</dt>
+    <dd class="col-sm-9">@Model.ItemCodeNo</dd>
+
+    <dt class="col-sm-3">Item Type</dt>
+    <dd class="col-sm-9">@Model.ItemType</dd>
+
+    <dt class="col-sm-3">Material</dt>
+    <dd class="col-sm-9">@Model.Material</dd>
+
+    <dt class="col-sm-3">Location</dt>
+    <dd class="col-sm-9">@Model.Location</dd>
+
+    <dt class="col-sm-3">Active</dt>
+    <dd class="col-sm-9">@(Model.IsActive ? "Yes" : "No")</dd>
+</dl>
+
+@using (Html.BeginForm("Delete", "Sapcode", new { id = Model.ItemCodeDescriptionMasterId }, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <input type="submit" value="Confirm Delete" class="btn btn-danger" />
+    <a href="@Url.Action("Index", "Sapcode")" class="btn btn-secondary">Cancel</a>
+}

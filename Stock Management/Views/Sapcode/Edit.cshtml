@@ -1,0 +1,123 @@
+@model StockManagement.Core.Sapcode
+
+@{
+    ViewBag.Title = "Edit SAP Code";
+}
+
+<h2>Edit SAP Code</h2>
+
+@using (Html.BeginForm("Edit", "Sapcode", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.ItemCodeDescriptionMasterId)
+    @Html.HiddenFor(m => m.CreatedDate)
+
+    <div class="form-horizontal">
+        <h4>SAP Code</h4>
+        <hr />
+
+        <!-- Row 1 -->
+        <div class="form-group row">
+            <div class="col-md-4">
+                @Html.LabelFor(m => m.ItemCodeNo)
+                @Html.TextBoxFor(m => m.ItemCodeNo, new { @class = "form-control" })
+            </div>
+            <div class="col-md-4">
+                @Html.LabelFor(m => m.ItemType)
+                @Html.TextBoxFor(m => m.ItemType, new { @class = "form-control" })
+            </div>
+            <div class="col-md-4">
+                @Html.LabelFor(m => m.Material)
+                @Html.TextBoxFor(m => m.Material, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <!-- Row 2 -->
+        <div class="form-group row">
+            <div class="col-md-4">
+                @Html.LabelFor(m => m.SizeInch)
+                @Html.TextBoxFor(m => m.SizeInch, new { @class = "form-control" })
+            </div>
+            <div class="col-md-4">
+                @Html.LabelFor(m => m.Weight)
+                @Html.TextBoxFor(m => m.Weight, new { @class = "form-control" })
+            </div>
+            <div class="col-md-4">
+                @Html.LabelFor(m => m.Color)
+                @Html.TextBoxFor(m => m.Color, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <!-- Row 3 -->
+        <div class="form-group row">
+            <div class="col-md-4">
+                @Html.LabelFor(m => m.UnitOfMeasure)
+                @Html.DropDownListFor(m => m.UnitOfMeasure,
+                    new SelectList(new[] { "KG", "MTR", "PCS", "LTR", "NOS" }, Model.UnitOfMeasure),
+                    "Select UOM",
+                    new { @class = "form-control" })
+            </div>
+            <div class="col-md-4">
+                @Html.LabelFor(m => m.RequiredQty)
+                @Html.TextBoxFor(m => m.RequiredQty, new { @class = "form-control", type = "number", step = "0.01" })
+            </div>
+            <div class="col-md-4">
+                @Html.LabelFor(m => m.AllocatedQty)
+                @Html.TextBoxFor(m => m.AllocatedQty, new { @class = "form-control", type = "number", step = "0.01" })
+            </div>
+        </div>
+
+        <!-- Row 4 -->
+        <div class="form-group row">
+            <div class="col-md-4">
+                @Html.LabelFor(m => m.IssuedQty)
+                @Html.TextBoxFor(m => m.IssuedQty, new { @class = "form-control", type = "number", step = "0.01" })
+            </div>
+            <div class="col-md-4">
+                @Html.LabelFor(m => m.BatchNo)
+                @Html.TextBoxFor(m => m.BatchNo, new { @class = "form-control" })
+            </div>
+            <div class="col-md-4">
+                @Html.LabelFor(m => m.HeatNo)
+                @Html.TextBoxFor(m => m.HeatNo, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <!-- Row 5 -->
+        <div class="form-group row">
+            <div class="col-md-4">
+                @Html.LabelFor(m => m.VendorName)
+                @Html.TextBoxFor(m => m.VendorName, new { @class = "form-control" })
+            </div>
+            <div class="col-md-4">
+                @Html.LabelFor(m => m.Location)
+                @Html.TextBoxFor(m => m.Location, new { @class = "form-control" })
+            </div>
+            <div class="col-md-4">
+                @Html.LabelFor(m => m.AllocationDate)
+                @Html.TextBoxFor(m => m.AllocationDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+            </div>
+        </div>
+
+        <!-- Row 6 -->
+        <div class="form-group row">
+            <div class="col-md-4">
+                @Html.LabelFor(m => m.IssueDate)
+                @Html.TextBoxFor(m => m.IssueDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+            </div>
+            <div class="col-md-4">
+                @Html.LabelFor(m => m.Remarks)
+                @Html.TextBoxFor(m => m.Remarks, new { @class = "form-control" })
+            </div>
+            <div class="col-md-4">
+                @Html.LabelFor(m => m.IsActive)
+                @Html.CheckBoxFor(m => m.IsActive)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-primary" />
+            <a href="@Url.Action("Index", "Sapcode")" class="btn btn-secondary">Cancel</a>
+        </div>
+    </div>
+}

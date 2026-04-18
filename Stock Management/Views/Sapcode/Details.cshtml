@@ -1,0 +1,73 @@
+@model StockManagement.Core.Sapcode
+
+@{
+    ViewBag.Title = "SAP Code Details";
+}
+
+<h2>SAP Code Details</h2>
+<hr />
+
+<dl class="row">
+    <dt class="col-sm-3">Item Code No</dt>
+    <dd class="col-sm-9">@Model.ItemCodeNo</dd>
+
+    <dt class="col-sm-3">Item Type</dt>
+    <dd class="col-sm-9">@Model.ItemType</dd>
+
+    <dt class="col-sm-3">Material</dt>
+    <dd class="col-sm-9">@Model.Material</dd>
+
+    <dt class="col-sm-3">Size (Inch)</dt>
+    <dd class="col-sm-9">@Model.SizeInch</dd>
+
+    <dt class="col-sm-3">Weight</dt>
+    <dd class="col-sm-9">@Model.Weight</dd>
+
+    <dt class="col-sm-3">Color</dt>
+    <dd class="col-sm-9">@Model.Color</dd>
+
+    <dt class="col-sm-3">Unit of Measure</dt>
+    <dd class="col-sm-9">@Model.UnitOfMeasure</dd>
+
+    <dt class="col-sm-3">Required Qty</dt>
+    <dd class="col-sm-9">@Model.RequiredQty</dd>
+
+    <dt class="col-sm-3">Allocated Qty</dt>
+    <dd class="col-sm-9">@Model.AllocatedQty</dd>
+
+    <dt class="col-sm-3">Issued Qty</dt>
+    <dd class="col-sm-9">@Model.IssuedQty</dd>
+
+    <dt class="col-sm-3">Batch No</dt>
+    <dd class="col-sm-9">@Model.BatchNo</dd>
+
+    <dt class="col-sm-3">Heat No</dt>
+    <dd class="col-sm-9">@Model.HeatNo</dd>
+
+    <dt class="col-sm-3">Vendor Name</dt>
+    <dd class="col-sm-9">@Model.VendorName</dd>
+
+    <dt class="col-sm-3">Allocation Date</dt>
+    <dd class="col-sm-9">@Model.AllocationDate.ToString("dd-MM-yyyy")</dd>
+
+    <dt class="col-sm-3">Issue Date</dt>
+    <dd class="col-sm-9">@(Model.IssueDate.HasValue ? Model.IssueDate.Value.ToString("dd-MM-yyyy") : "-")</dd>
+
+    <dt class="col-sm-3">Location</dt>
+    <dd class="col-sm-9">@Model.Location</dd>
+
+    <dt class="col-sm-3">Remarks</dt>
+    <dd class="col-sm-9">@Model.Remarks</dd>
+
+    <dt class="col-sm-3">Active</dt>
+    <dd class="col-sm-9">@(Model.IsActive ? "Yes" : "No")</dd>
+
+    <dt class="col-sm-3">Created Date</dt>
+    <dd class="col-sm-9">@Model.CreatedDate.ToString("dd-MM-yyyy")</dd>
+
+    <dt class="col-sm-3">Modified Date</dt>
+    <dd class="col-sm-9">@Model.ModifiedDate.ToString("dd-MM-yyyy")</dd>
+</dl>
+
+<a href="@Url.Action("Edit", "Sapcode", new { id = Model.ItemCodeDescriptionMasterId })" class="btn btn-warning">Edit</a>
+<a href="@Url.Action("Index", "Sapcode")" class="btn btn-secondary">Back to List</a>

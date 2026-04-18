@@ -63,6 +63,10 @@ builder.Services.AddScoped<IDailyMaterialDetailService, DailyMaterialDetailServi
 builder.Services.AddScoped<IVendorRepository>(_ => new VendorRepository(connectionString));
 builder.Services.AddScoped<IVendorService, VendorService>();
 
+// Sapcode
+builder.Services.AddScoped<ISapcodeRepository>(_ => new SapcodeRepository(connectionString));
+builder.Services.AddScoped<ISapcodeService, SapcodeService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
