@@ -11,10 +11,10 @@ namespace StockManagement.Interface
     }
     public interface IDailyMaterialDetailRepository
     {
-        DailyMaterialDetail? GetById(int id);
-        IEnumerable<DailyMaterialDetail> GetByDmrId(int dmrId);
-        void Add(DailyMaterialDetail entity);
-        void Update(DailyMaterialDetail entity);
+        DmrDetails? GetById(int id);
+        IEnumerable<DmrDetails> GetByDmrId(int dmrId);
+        void Add(DmrDetails entity);
+        void Update(DmrDetails entity);
         void Delete(int id);
     }
 }

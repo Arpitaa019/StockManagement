@@ -8,12 +8,10 @@ namespace Stock_Management.Controllers
     public class IMRCumulativeController : Controller
     {
         private readonly IIMRCumulativeService _service;
-        private readonly IIMRInfoService _imrService;
 
-        public IMRCumulativeController(IIMRCumulativeService service, IIMRInfoService imrService)
+        public IMRCumulativeController(IIMRCumulativeService service)
         {
             _service = service;
-            _imrService = imrService;
         }
 
         // GET: IMRCumulative
@@ -37,7 +35,7 @@ namespace Stock_Management.Controllers
             var model = new IMRCumulative { CreatedDate = DateTime.Now };
             if (imrId.HasValue) model.ImrId = imrId.Value;
 
-            var imrList = _imrService.GetAll().Select(i => new SelectListItem($"IMR-{i.ImrId} - Prod:{i.ProductId}", i.ImrId.ToString())).ToList();
+            var imrList = _service.GetAll().Select(i => new SelectListItem($"IMR-{i.ImrId}", i.ImrId.ToString())).ToList();
             ViewBag.ImrList = imrList;
             return View(model);
         }
@@ -49,7 +47,7 @@ namespace Stock_Management.Controllers
         {
             if (!ModelState.IsValid)
             {
-                var imrList = _imrService.GetAll().Select(i => new SelectListItem($"IMR-{i.ImrId} - Prod:{i.ProductId}", i.ImrId.ToString())).ToList();
+                var imrList = _service.GetAll().Select(i => new SelectListItem($"IMR-{i.ImrId}", i.ImrId.ToString())).ToList();
                 ViewBag.ImrList = imrList;
                 return View(model);
             }
@@ -63,7 +61,7 @@ namespace Stock_Management.Controllers
         {
             var model = _service.Get(id);
             if (model == null) return NotFound();
-            var imrList = _imrService.GetAll().Select(i => new SelectListItem($"IMR-{i.ImrId} - Prod:{i.ProductId}", i.ImrId.ToString())).ToList();
+            var imrList = _service.GetAll().Select(i => new SelectListItem($"IMR-{i.ImrId}", i.ImrId.ToString())).ToList();
             ViewBag.ImrList = imrList;
             return View(model);
         }
@@ -76,7 +74,7 @@ namespace Stock_Management.Controllers
             if (id != model.ImrCumulativeId) return BadRequest();
             if (!ModelState.IsValid)
             {
-                var imrList = _imrService.GetAll().Select(i => new SelectListItem($"IMR-{i.ImrId} - Prod:{i.ProductId}", i.ImrId.ToString())).ToList();
+                var imrList = _service.GetAll().Select(i => new SelectListItem($"IMR-{i.ImrId}", i.ImrId.ToString())).ToList();
                 ViewBag.ImrList = imrList;
                 return View(model);
             }

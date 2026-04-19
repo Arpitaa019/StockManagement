@@ -41,12 +41,8 @@ builder.Services.AddScoped<IRFPInfoService, RFPInfoService>();
 builder.Services.AddScoped<IRFQInfoRepository>(_ => new RFQInfoRepository(connectionString));
 builder.Services.AddScoped<IRFQInfoService, RFQInfoService>();
 
-// IMRInfo
-builder.Services.AddScoped<IIMRInfoRepository>(_ => new IMRInfoRepository(connectionString));
-builder.Services.AddScoped<IIMRInfoService, IMRInfoService>();
-
 // IMRCumulative
-builder.Services.AddScoped<IIMRCumulativeRepository>(_ => new IMRCumulativeRepository(connectionString));
+builder.Services.AddScoped<IIMRCumulativeRepository>(_ => new ImirRepository(connectionString));
 builder.Services.AddScoped<IIMRCumulativeService, IMRCumulativeService>();
 
 // InvoiceInfo

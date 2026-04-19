@@ -4,10 +4,10 @@ namespace StockManagement.Services.Interfaces
 {
     public interface IDailyMaterialDetailService
     {
-        DailyMaterialDetail? Get(int id);
-        IEnumerable<DailyMaterialDetail> GetByDmrId(int dmrId);
-        void Create(DailyMaterialDetail entity);
-        void Update(DailyMaterialDetail entity);
+        DmrDetails? Get(int id);
+        IEnumerable<DmrDetails> GetByDmrId(int dmrId);
+        void Create(DmrDetails entity);
+        void Update(DmrDetails entity);
         void Delete(int id);
     }
 }

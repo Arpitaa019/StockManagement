@@ -5,10 +5,10 @@ using StockManagement.Interface;
 
 namespace StockManagement.Repository
 {
-    public class IMRCumulativeRepository : IIMRCumulativeRepository
+    public class ImirRepository : IIMRCumulativeRepository
     {
         private readonly string _connectionString;
-        public IMRCumulativeRepository(string connectionString) { _connectionString = connectionString; }
+        public ImirRepository(string connectionString) { _connectionString = connectionString; }
 
         public IMRCumulative? GetById(int id)
         {

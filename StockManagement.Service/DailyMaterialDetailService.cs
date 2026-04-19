@@ -13,10 +13,10 @@ namespace StockManagement.Services
     {
         private readonly IDailyMaterialDetailRepository _repo;
         public DailyMaterialDetailService(IDailyMaterialDetailRepository repo) { _repo = repo; }
-        public DailyMaterialDetail? Get(int id) => _repo.GetById(id);
-        public IEnumerable<DailyMaterialDetail> GetByDmrId(int dmrId) => _repo.GetByDmrId(dmrId);
-        public void Create(DailyMaterialDetail entity) => _repo.Add(entity);
-        public void Update(DailyMaterialDetail entity) => _repo.Update(entity);
+        public DmrDetails? Get(int id) => _repo.GetById(id);
+        public IEnumerable<DmrDetails> GetByDmrId(int dmrId) => _repo.GetByDmrId(dmrId);
+        public void Create(DmrDetails entity) => _repo.Add(entity);
+        public void Update(DmrDetails entity) => _repo.Update(entity);
         public void Delete(int id) => _repo.Delete(id);
     }
 }

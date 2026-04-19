@@ -75,7 +75,7 @@ namespace StockManagement.Repository
         private readonly string _connectionString;
         public DailyMaterialDetailRepository(string connectionString) { _connectionString = connectionString; }
 
-        public DailyMaterialDetail? GetById(int id)
+        public DmrDetails? GetById(int id)
         {
             using var conn = new SqlConnection(_connectionString);
             using var cmd = new SqlCommand("sp_GetDailyMaterialDetailById", conn) { CommandType = CommandType.StoredProcedure };
@@ -83,24 +83,24 @@ namespace StockManagement.Repository
             conn.Open();
             using var reader = cmd.ExecuteReader();
             if (reader.Read())
-                return new DailyMaterialDetail { DmrDetailId = (int)reader["DmrDetailId"], DmrId = (int)reader["DmrId"], ProductId = (int)reader["ProductId"], Quantity = (int)reader["Quantity"], Status = reader["Status"].ToString()! };
+                return new DmrDetails { DmrDetailId = (int)reader["DmrDetailId"], DmrId = (int)reader["DmrId"], ProductId = (int)reader["ProductId"], Quantity = (int)reader["Quantity"], Status = reader["Status"].ToString()! };
             return null;
         }
 
-        public IEnumerable<DailyMaterialDetail> GetByDmrId(int dmrId)
+        public IEnumerable<DmrDetails> GetByDmrId(int dmrId)
         {
-            var list = new List<DailyMaterialDetail>();
+            var list = new List<DmrDetails>();
             using var conn = new SqlConnection(_connectionString);
             using var cmd = new SqlCommand("sp_GetDailyMaterialDetailByDmrId", conn) { CommandType = CommandType.StoredProcedure };
             cmd.Parameters.AddWithValue("@DmrId", dmrId);
             conn.Open();
             using var reader = cmd.ExecuteReader();
             while (reader.Read())
-                list.Add(new DailyMaterialDetail { DmrDetailId = (int)reader["DmrDetailId"], DmrId = (int)reader["DmrId"], ProductId = (int)reader["ProductId"], Quantity = (int)reader["Quantity"], Status = reader["Status"].ToString()! });
+                list.Add(new DmrDetails { DmrDetailId = (int)reader["DmrDetailId"], DmrId = (int)reader["DmrId"], ProductId = (int)reader["ProductId"], Quantity = (int)reader["Quantity"], Status = reader["Status"].ToString()! });
             return list;
         }
 
-        public void Add(DailyMaterialDetail entity)
+        public void Add(DmrDetails entity)
         {
             using var conn = new SqlConnection(_connectionString);
             using var cmd = new SqlCommand("sp_AddDailyMaterialDetail", conn) { CommandType = CommandType.StoredProcedure };
@@ -111,7 +111,7 @@ namespace StockManagement.Repository
             conn.Open(); cmd.ExecuteNonQuery();
         }
 
-        public void Update(DailyMaterialDetail entity)
+        public void Update(DmrDetails entity)
         {
             using var conn = new SqlConnection(_connectionString);
             using var cmd = new SqlCommand("sp_UpdateDailyMaterialDetail", conn) { CommandType = CommandType.StoredProcedure };

@@ -20,12 +20,5 @@ namespace StockManagement.Entity
         public string Remarks { get; set; }
     }
 
-    public class DailyMaterialDetail
-    {
-        public int DmrDetailId { get; set; }        
-        public int DmrId { get; set; }               // Linked to DMR Master
-        public int ProductId { get; set; }           // Product delivered
-        public int Quantity { get; set; }            // Quantity received
-        public string Status { get; set; }
-    }
+  
 }
