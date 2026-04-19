@@ -1,0 +1,44 @@
+@model List<IMIRApproveItem>
+
+@{
+    ViewBag.Title = "Approve IMIR from DMR";
+    var dmrId = ViewBag.DmrId as int? ?? 0;
+}
+
+<h2>Approve IMIR from DMR @dmrId</h2>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">No details found for this DMR.</div>
+}
+else
+{
+    <form method="post" asp-action="ApproveFromDmrConfirm">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="dmrId" value="@dmrId" />
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>ProductId</th>
+                    <th>Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ int i = 1; }
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@i++</td>
+                        <td>@item.ProductId</td>
+                        <td>@item.Quantity</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="mt-2">
+            <input type="submit" value="Approve and Add to IMIR" class="btn btn-primary" />
+            <a class="btn btn-secondary" href="@Url.Action("Details", "DMR", new { id = dmrId })">Back to DMR</a>
+        </div>
+    </form>
+}

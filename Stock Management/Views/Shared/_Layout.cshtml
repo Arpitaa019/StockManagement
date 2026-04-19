@@ -25,6 +25,51 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="prDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Purchase Request</a>
+                            <ul class="dropdown-menu" aria-labelledby="prDropdown">
+                                <li><a class="dropdown-item" href="@Url.Action("Index","PurchaseRequest")">Index</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="promptIdAndNavigate('PurchaseRequest','Details');return false;">Details</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="promptIdAndNavigate('PurchaseRequest','Edit');return false;">Edit</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="promptIdAndNavigate('PurchaseRequest','Delete');return false;">Delete</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="poDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Purchase Order</a>
+                            <ul class="dropdown-menu" aria-labelledby="poDropdown">
+                                <li><a class="dropdown-item" href="@Url.Action("Index","PurchaseOrder")">Index</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="promptIdAndNavigate('PurchaseOrder','Details');return false;">Details</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="promptIdAndNavigate('PurchaseOrder','Edit');return false;">Edit</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="promptIdAndNavigate('PurchaseOrder','Delete');return false;">Delete</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="invoiceDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Invoice</a>
+                            <ul class="dropdown-menu" aria-labelledby="invoiceDropdown">
+                                <li><a class="dropdown-item" href="@Url.Action("Index","Invoice")">Index</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="promptIdAndNavigate('Invoice','Details');return false;">Details</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="promptIdAndNavigate('Invoice','Edit');return false;">Edit</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="promptIdAndNavigate('Invoice','Delete');return false;">Delete</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="dmrDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">DMR</a>
+                            <ul class="dropdown-menu" aria-labelledby="dmrDropdown">
+                                <li><a class="dropdown-item" href="@Url.Action("Index","DMR")">Index</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="promptIdAndNavigate('DMR','Details');return false;">Details</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="promptIdAndNavigate('DMR','Edit');return false;">Edit</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="promptIdAndNavigate('DMR','Delete');return false;">Delete</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="imirDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">IMIR</a>
+                            <ul class="dropdown-menu" aria-labelledby="imirDropdown">
+                                <li><a class="dropdown-item" href="@Url.Action("Index","IMRCumulative")">Index</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="promptIdAndNavigate('IMRCumulative','Details');return false;">Details</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="promptIdAndNavigate('IMRCumulative','Edit');return false;">Edit</a></li>
+                                <li><a class="dropdown-item" href="#" onclick="promptIdAndNavigate('IMRCumulative','Delete');return false;">Delete</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -44,6 +89,21 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        function promptIdAndNavigate(controller, action) {
+            var id = prompt('Enter id for ' + controller + ' ' + action + ':');
+            if (!id) return;
+            id = id.trim();
+            if (!id) return;
+            // basic validation: numeric
+            if (!/^[0-9]+$/.test(id)) {
+                alert('Please enter a numeric id');
+                return;
+            }
+            var url = '/' + controller + '/' + action + '/' + id;
+            window.location.href = url;
+        }
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

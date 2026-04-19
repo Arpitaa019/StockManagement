@@ -12,6 +12,8 @@ namespace StockManagement.Entity
     public class DMRMaster
     {
         public int DmrId { get; set; }               // Unique identifier
+        public int? POId { get; set; }               // Reference to Purchase Order (optional)
+        public string? PONumber { get; set; }        // Denormalized PO number for display
         public int VendorId { get; set; }            // Vendor delivering goods
         public DateTime DeliveryDate { get; set; }   // Date of delivery
         public string ApprovedBy { get; set; }       // Admin/User who approved

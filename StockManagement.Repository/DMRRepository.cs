@@ -13,12 +13,22 @@ namespace StockManagement.Repository
         public DMRMaster? GetById(int id)
         {
             using var conn = new SqlConnection(_connectionString);
-            using var cmd = new SqlCommand("sp_GetDailyMaterialInfoById", conn) { CommandType = CommandType.StoredProcedure };
+            using var cmd = new SqlCommand("sp_DMR_GetById", conn) { CommandType = CommandType.StoredProcedure };
             cmd.Parameters.AddWithValue("@DmrId", id);
             conn.Open();
             using var reader = cmd.ExecuteReader();
             if (reader.Read())
-                return new DMRMaster { DmrId = (int)reader["DmrId"], VendorId = (int)reader["VendorId"], DeliveryDate = (DateTime)reader["DeliveryDate"], ApprovedBy = reader["ApprovedBy"].ToString()!, IsFinalized = (bool)reader["IsFinalized"], FinalizedDate = reader["FinalizedDate"] as DateTime?, Remarks = reader["Remarks"].ToString() };
+                return new DMRMaster {
+                    DmrId = (int)reader["DmrId"],
+                    POId = reader["POId"] as int? ?? (reader["POId"] == DBNull.Value ? (int?)null : Convert.ToInt32(reader["POId"])),
+                    PONumber = reader["PONumber"] as string ?? string.Empty,
+                    VendorId = (int)reader["VendorId"],
+                    DeliveryDate = (DateTime)reader["DeliveryDate"],
+                    ApprovedBy = reader["ApprovedBy"].ToString()!,
+                    IsFinalized = (bool)reader["IsFinalized"],
+                    FinalizedDate = reader["FinalizedDate"] as DateTime?,
+                    Remarks = reader["Remarks"].ToString()
+                };
             return null;
         }
 
@@ -26,19 +36,30 @@ namespace StockManagement.Repository
         {
             var list = new List<DMRMaster>();
             using var conn = new SqlConnection(_connectionString);
-            using var cmd = new SqlCommand("sp_GetAllDailyMaterialInfo", conn) { CommandType = CommandType.StoredProcedure };
+            using var cmd = new SqlCommand("sp_DMR_GetAll", conn) { CommandType = CommandType.StoredProcedure };
             conn.Open();
             using var reader = cmd.ExecuteReader();
             while (reader.Read())
-                list.Add(new DMRMaster { DmrId = (int)reader["DmrId"], VendorId = (int)reader["VendorId"], DeliveryDate = (DateTime)reader["DeliveryDate"], ApprovedBy = reader["ApprovedBy"].ToString()!, IsFinalized = (bool)reader["IsFinalized"], FinalizedDate = reader["FinalizedDate"] as DateTime?, Remarks = reader["Remarks"].ToString() });
+                list.Add(new DMRMaster {
+                    DmrId = (int)reader["DmrId"],
+                    POId = reader["POId"] as int? ?? (reader["POId"] == DBNull.Value ? (int?)null : Convert.ToInt32(reader["POId"])),
+                    PONumber = reader["PONumber"] as string ?? string.Empty,
+                    VendorId = (int)reader["VendorId"],
+                    DeliveryDate = (DateTime)reader["DeliveryDate"],
+                    ApprovedBy = reader["ApprovedBy"].ToString()!,
+                    IsFinalized = (bool)reader["IsFinalized"],
+                    FinalizedDate = reader["FinalizedDate"] as DateTime?,
+                    Remarks = reader["Remarks"].ToString()
+                });
             return list;
         }
 
         public void Add(DMRMaster entity)
         {
             using var conn = new SqlConnection(_connectionString);
-            using var cmd = new SqlCommand("sp_AddDailyMaterialInfo", conn) { CommandType = CommandType.StoredProcedure };
+            using var cmd = new SqlCommand("sp_DMR_Add", conn) { CommandType = CommandType.StoredProcedure };
             cmd.Parameters.AddWithValue("@VendorId", entity.VendorId);
+            cmd.Parameters.AddWithValue("@POId", (object?)entity.POId ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@DeliveryDate", entity.DeliveryDate);
             cmd.Parameters.AddWithValue("@ApprovedBy", entity.ApprovedBy);
             cmd.Parameters.AddWithValue("@IsFinalized", entity.IsFinalized);
@@ -50,9 +71,10 @@ namespace StockManagement.Repository
         public void Update(DMRMaster entity)
         {
             using var conn = new SqlConnection(_connectionString);
-            using var cmd = new SqlCommand("sp_UpdateDailyMaterialInfo", conn) { CommandType = CommandType.StoredProcedure };
+            using var cmd = new SqlCommand("sp_DMR_Update", conn) { CommandType = CommandType.StoredProcedure };
             cmd.Parameters.AddWithValue("@DmrId", entity.DmrId);
             cmd.Parameters.AddWithValue("@VendorId", entity.VendorId);
+            cmd.Parameters.AddWithValue("@POId", (object?)entity.POId ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@DeliveryDate", entity.DeliveryDate);
             cmd.Parameters.AddWithValue("@ApprovedBy", entity.ApprovedBy);
             cmd.Parameters.AddWithValue("@IsFinalized", entity.IsFinalized);
@@ -64,7 +86,7 @@ namespace StockManagement.Repository
         public void Delete(int id)
         {
             using var conn = new SqlConnection(_connectionString);
-            using var cmd = new SqlCommand("sp_DeleteDailyMaterialInfo", conn) { CommandType = CommandType.StoredProcedure };
+            using var cmd = new SqlCommand("sp_DMR_Delete", conn) { CommandType = CommandType.StoredProcedure };
             cmd.Parameters.AddWithValue("@DmrId", id);
             conn.Open(); cmd.ExecuteNonQuery();
         }
@@ -78,7 +100,7 @@ namespace StockManagement.Repository
         public DmrDetails? GetById(int id)
         {
             using var conn = new SqlConnection(_connectionString);
-            using var cmd = new SqlCommand("sp_GetDailyMaterialDetailById", conn) { CommandType = CommandType.StoredProcedure };
+            using var cmd = new SqlCommand("sp_DMRDetail_GetById", conn) { CommandType = CommandType.StoredProcedure };
             cmd.Parameters.AddWithValue("@DmrDetailId", id);
             conn.Open();
             using var reader = cmd.ExecuteReader();
@@ -91,7 +113,7 @@ namespace StockManagement.Repository
         {
             var list = new List<DmrDetails>();
             using var conn = new SqlConnection(_connectionString);
-            using var cmd = new SqlCommand("sp_GetDailyMaterialDetailByDmrId", conn) { CommandType = CommandType.StoredProcedure };
+            using var cmd = new SqlCommand("sp_DMRDetail_GetByDmrId", conn) { CommandType = CommandType.StoredProcedure };
             cmd.Parameters.AddWithValue("@DmrId", dmrId);
             conn.Open();
             using var reader = cmd.ExecuteReader();
@@ -103,7 +125,7 @@ namespace StockManagement.Repository
         public void Add(DmrDetails entity)
         {
             using var conn = new SqlConnection(_connectionString);
-            using var cmd = new SqlCommand("sp_AddDailyMaterialDetail", conn) { CommandType = CommandType.StoredProcedure };
+            using var cmd = new SqlCommand("sp_DMRDetail_Add", conn) { CommandType = CommandType.StoredProcedure };
             cmd.Parameters.AddWithValue("@DmrId", entity.DmrId);
             cmd.Parameters.AddWithValue("@ProductId", entity.ProductId);
             cmd.Parameters.AddWithValue("@Quantity", entity.Quantity);
@@ -114,7 +136,7 @@ namespace StockManagement.Repository
         public void Update(DmrDetails entity)
         {
             using var conn = new SqlConnection(_connectionString);
-            using var cmd = new SqlCommand("sp_UpdateDailyMaterialDetail", conn) { CommandType = CommandType.StoredProcedure };
+            using var cmd = new SqlCommand("sp_DMRDetail_Update", conn) { CommandType = CommandType.StoredProcedure };
             cmd.Parameters.AddWithValue("@DmrDetailId", entity.DmrDetailId);
             cmd.Parameters.AddWithValue("@DmrId", entity.DmrId);
             cmd.Parameters.AddWithValue("@ProductId", entity.ProductId);
@@ -126,7 +148,7 @@ namespace StockManagement.Repository
         public void Delete(int id)
         {
             using var conn = new SqlConnection(_connectionString);
-            using var cmd = new SqlCommand("sp_DeleteDailyMaterialDetail", conn) { CommandType = CommandType.StoredProcedure };
+            using var cmd = new SqlCommand("sp_DMRDetail_Delete", conn) { CommandType = CommandType.StoredProcedure };
             cmd.Parameters.AddWithValue("@DmrDetailId", id);
             conn.Open(); cmd.ExecuteNonQuery();
         }

@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using StockManagement.Entity;
 using StockManagement.Interface;
 using StockManagement.Services.Interfaces;
+// removed unused/incorrect namespaces
 
 namespace Stock_Management.Controllers
 {
@@ -9,11 +12,13 @@ namespace Stock_Management.Controllers
     {
         private readonly IDailyMaterialInfoService _service;
         private readonly IDailyMaterialDetailService _detailService;
+        private readonly IPurchaseOrderService _poService;
 
-        public DMRController(IDailyMaterialInfoService service, IDailyMaterialDetailService detailService)
+        public DMRController(IDailyMaterialInfoService service, IDailyMaterialDetailService detailService, IPurchaseOrderService poService)
         {
             _service = service;
             _detailService = detailService;
+            _poService = poService;
         }
 
         // GET: DMR
@@ -37,6 +42,8 @@ namespace Stock_Management.Controllers
         public IActionResult Create()
         {
             var model = new DMRMaster { DeliveryDate = DateTime.Now };
+            var poList = _poService.GetAll().Select(p => new SelectListItem(p.PONumber, p.POId.ToString())).ToList();
+            ViewBag.POList = poList;
             return View(model);
         }
 
@@ -45,7 +52,12 @@ namespace Stock_Management.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(DMRMaster model)
         {
-            if (!ModelState.IsValid) return View(model);
+            if (!ModelState.IsValid)
+            {
+                var poList = _poService.GetAll().Select(p => new SelectListItem(p.PONumber, p.POId.ToString())).ToList();
+                ViewBag.POList = poList;
+                return View(model);
+            }
             _service.Create(model);
             return RedirectToAction(nameof(Index));
         }
@@ -55,6 +67,8 @@ namespace Stock_Management.Controllers
         {
             var model = _service.Get(id);
             if (model == null) return NotFound();
+            var poList = _poService.GetAll().Select(p => new SelectListItem(p.PONumber, p.POId.ToString())).ToList();
+            ViewBag.POList = poList;
             return View(model);
         }
 
@@ -64,7 +78,12 @@ namespace Stock_Management.Controllers
         public IActionResult Edit(int id, DMRMaster model)
         {
             if (id != model.DmrId) return BadRequest();
-            if (!ModelState.IsValid) return View(model);
+            if (!ModelState.IsValid)
+            {
+                var poList = _poService.GetAll().Select(p => new SelectListItem(p.PONumber, p.POId.ToString())).ToList();
+                ViewBag.POList = poList;
+                return View(model);
+            }
             _service.Update(model);
             return RedirectToAction(nameof(Index));
         }
