@@ -11,8 +11,8 @@ namespace StockManagement.Services
 {
     public class DailyMaterialDetailService : IDailyMaterialDetailService
     {
-        private readonly IDailyMaterialDetailRepository _repo;
-        public DailyMaterialDetailService(IDailyMaterialDetailRepository repo) { _repo = repo; }
+        private readonly IDMRDetailRepository _repo;
+        public DailyMaterialDetailService(IDMRDetailRepository repo) { _repo = repo; }
         public DmrDetails? Get(int id) => _repo.GetById(id);
         public IEnumerable<DmrDetails> GetByDmrId(int dmrId) => _repo.GetByDmrId(dmrId);
         public void Create(DmrDetails entity) => _repo.Add(entity);

@@ -53,10 +53,10 @@ builder.Services.AddScoped<IInvoiceInfoService, InvoiceInfoService>();
 builder.Services.AddScoped<IRequestForApprovalInfoRepository>(_ => new RequestForApprovalInfoRepository(connectionString));
 builder.Services.AddScoped<IRequestForApprovalInfoService, RequestForApprovalInfoService>();
 
-// DailyMaterialInfo + Detail
-builder.Services.AddScoped<IDailyMaterialInfoRepository>(_ => new DailyMaterialInfoRepository(connectionString));
+// DMR (Daily Material Report) - master and detail repositories
+builder.Services.AddScoped<IDMRRepository>(_ => new DMRRepository(connectionString));
 builder.Services.AddScoped<IDailyMaterialInfoService, DailyMaterialInfoService>();
-builder.Services.AddScoped<IDailyMaterialDetailRepository>(_ => new DailyMaterialDetailRepository(connectionString));
+builder.Services.AddScoped<IDMRDetailRepository>(_ => new DMRDetailRepository(connectionString));
 builder.Services.AddScoped<IDailyMaterialDetailService, DailyMaterialDetailService>();
 
 // Vendor

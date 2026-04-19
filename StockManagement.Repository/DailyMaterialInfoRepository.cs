@@ -5,10 +5,10 @@ using StockManagement.Interface;
 
 namespace StockManagement.Repository
 {
-    public class DailyMaterialInfoRepository : IDailyMaterialInfoRepository
+    public class DMRRepository : IDMRRepository
     {
         private readonly string _connectionString;
-        public DailyMaterialInfoRepository(string connectionString) { _connectionString = connectionString; }
+        public DMRRepository(string connectionString) { _connectionString = connectionString; }
 
         public DMRMaster? GetById(int id)
         {
@@ -70,10 +70,10 @@ namespace StockManagement.Repository
         }
     }
 
-    public class DailyMaterialDetailRepository : IDailyMaterialDetailRepository
+    public class DMRDetailRepository : IDMRDetailRepository
     {
         private readonly string _connectionString;
-        public DailyMaterialDetailRepository(string connectionString) { _connectionString = connectionString; }
+        public DMRDetailRepository(string connectionString) { _connectionString = connectionString; }
 
         public DmrDetails? GetById(int id)
         {

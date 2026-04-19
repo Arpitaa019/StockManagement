@@ -1,7 +1,8 @@
 ﻿using StockManagement.Entity;
 namespace StockManagement.Interface
 {
-    public interface IDailyMaterialInfoRepository
+    // Repository for DMR (Delivery Material Report) master records
+    public interface IDMRRepository
     {
         DMRMaster? GetById(int id);
         IEnumerable<DMRMaster> GetAll();
@@ -9,7 +10,9 @@ namespace StockManagement.Interface
         void Update(DMRMaster entity);
         void Delete(int id);
     }
-    public interface IDailyMaterialDetailRepository
+
+    // Repository for DMR detail records
+    public interface IDMRDetailRepository
     {
         DmrDetails? GetById(int id);
         IEnumerable<DmrDetails> GetByDmrId(int dmrId);
