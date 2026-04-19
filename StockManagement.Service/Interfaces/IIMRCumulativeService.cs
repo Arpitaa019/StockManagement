@@ -1,12 +1,12 @@
 using StockManagement.Entity;
 namespace StockManagement.Interface
 {
-    public interface IIMRCumulativeService
+    public interface IIMIRCumulativeService
     {
-        IMRCumulative? Get(int id);
-        IEnumerable<IMRCumulative> GetAll();
-        void Create(IMRCumulative entity);
-        void Update(IMRCumulative entity);
+        IMIRCumulative? Get(int id);
+        IEnumerable<IMIRCumulative> GetAll();
+        void Create(IMIRCumulative entity);
+        void Update(IMIRCumulative entity);
         void Delete(int id);
     }
 }

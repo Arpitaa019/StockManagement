@@ -7,9 +7,9 @@ namespace Stock_Management.Controllers
 {
     public class IMRCumulativeController : Controller
     {
-        private readonly IIMRCumulativeService _service;
+        private readonly IIMIRCumulativeService _service;
 
-        public IMRCumulativeController(IIMRCumulativeService service)
+        public IMRCumulativeController(IIMIRCumulativeService service)
         {
             _service = service;
         }
@@ -32,10 +32,10 @@ namespace Stock_Management.Controllers
         // GET: IMRCumulative/Create
         public IActionResult Create(int? imrId)
         {
-            var model = new IMRCumulative { CreatedDate = DateTime.Now };
-            if (imrId.HasValue) model.ImrId = imrId.Value;
+            var model = new IMIRCumulative { CreatedDate = DateTime.Now };
+            if (imrId.HasValue) model.ImirId = imrId.Value;
 
-            var imrList = _service.GetAll().Select(i => new SelectListItem($"IMR-{i.ImrId}", i.ImrId.ToString())).ToList();
+            var imrList = _service.GetAll().Select(i => new SelectListItem($"IMIR-{i.ImirId}", i.ImirId.ToString())).ToList();
             ViewBag.ImrList = imrList;
             return View(model);
         }
@@ -43,11 +43,11 @@ namespace Stock_Management.Controllers
         // POST: IMRCumulative/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(IMRCumulative model)
+        public IActionResult Create(IMIRCumulative model)
         {
             if (!ModelState.IsValid)
             {
-                var imrList = _service.GetAll().Select(i => new SelectListItem($"IMR-{i.ImrId}", i.ImrId.ToString())).ToList();
+                var imrList = _service.GetAll().Select(i => new SelectListItem($"IMIR-{i.ImirId}", i.ImirId.ToString())).ToList();
                 ViewBag.ImrList = imrList;
                 return View(model);
             }
@@ -61,7 +61,7 @@ namespace Stock_Management.Controllers
         {
             var model = _service.Get(id);
             if (model == null) return NotFound();
-            var imrList = _service.GetAll().Select(i => new SelectListItem($"IMR-{i.ImrId}", i.ImrId.ToString())).ToList();
+            var imrList = _service.GetAll().Select(i => new SelectListItem($"IMIR-{i.ImirId}", i.ImirId.ToString())).ToList();
             ViewBag.ImrList = imrList;
             return View(model);
         }
@@ -69,12 +69,12 @@ namespace Stock_Management.Controllers
         // POST: IMRCumulative/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, IMRCumulative model)
+        public IActionResult Edit(int id, IMIRCumulative model)
         {
-            if (id != model.ImrCumulativeId) return BadRequest();
+            if (id != model.ImirCumulativeId) return BadRequest();
             if (!ModelState.IsValid)
             {
-                var imrList = _service.GetAll().Select(i => new SelectListItem($"IMR-{i.ImrId}", i.ImrId.ToString())).ToList();
+                var imrList = _service.GetAll().Select(i => new SelectListItem($"IMIR-{i.ImirId}", i.ImirId.ToString())).ToList();
                 ViewBag.ImrList = imrList;
                 return View(model);
             }

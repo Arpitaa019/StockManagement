@@ -5,12 +5,12 @@ using StockManagement.Interface;
 
 namespace StockManagement.Repository
 {
-    public class ImirRepository : IIMRCumulativeRepository
+    public class ImirRepository : IIMIRCumulativeRepository
     {
         private readonly string _connectionString;
         public ImirRepository(string connectionString) { _connectionString = connectionString; }
 
-        public IMRCumulative? GetById(int id)
+        public IMIRCumulative? GetById(int id)
         {
             using var conn = new SqlConnection(_connectionString);
             using var cmd = new SqlCommand("sp_GetIMRCumulativeById", conn) { CommandType = CommandType.StoredProcedure };
@@ -18,9 +18,9 @@ namespace StockManagement.Repository
             conn.Open();
             using var reader = cmd.ExecuteReader();
             if (reader.Read())
-                return new IMRCumulative {
-                    ImrCumulativeId = (int)reader["ImrCumulativeId"],
-                    ImrId = (int)reader["ImrId"],
+                return new IMIRCumulative {
+                    ImirCumulativeId = (int)reader["ImrCumulativeId"],
+                    ImirId = (int)reader["ImrId"],
                     Quantity = Convert.ToDecimal(reader["Quantity"]),
                     Remarks = reader["Remarks"] as string ?? string.Empty,
                     CreatedDate = (DateTime)reader["CreatedDate"]
@@ -28,17 +28,17 @@ namespace StockManagement.Repository
             return null;
         }
 
-        public IEnumerable<IMRCumulative> GetAll()
+        public IEnumerable<IMIRCumulative> GetAll()
         {
-            var list = new List<IMRCumulative>();
+            var list = new List<IMIRCumulative>();
             using var conn = new SqlConnection(_connectionString);
             using var cmd = new SqlCommand("sp_GetAllIMRCumulative", conn) { CommandType = CommandType.StoredProcedure };
             conn.Open();
             using var reader = cmd.ExecuteReader();
             while (reader.Read())
-                list.Add(new IMRCumulative {
-                    ImrCumulativeId = (int)reader["ImrCumulativeId"],
-                    ImrId = (int)reader["ImrId"],
+                list.Add(new IMIRCumulative {
+                    ImirCumulativeId = (int)reader["ImrCumulativeId"],
+                    ImirId = (int)reader["ImrId"],
                     Quantity = Convert.ToDecimal(reader["Quantity"]),
                     Remarks = reader["Remarks"] as string ?? string.Empty,
                     CreatedDate = (DateTime)reader["CreatedDate"]
@@ -46,23 +46,23 @@ namespace StockManagement.Repository
             return list;
         }
 
-        public void Add(IMRCumulative entity)
+        public void Add(IMIRCumulative entity)
         {
             using var conn = new SqlConnection(_connectionString);
             using var cmd = new SqlCommand("sp_AddIMRCumulative", conn) { CommandType = CommandType.StoredProcedure };
-            cmd.Parameters.AddWithValue("@ImrId", entity.ImrId);
+            cmd.Parameters.AddWithValue("@ImrId", entity.ImirId);
             cmd.Parameters.AddWithValue("@Quantity", entity.Quantity);
             cmd.Parameters.AddWithValue("@Remarks", (object?)entity.Remarks ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@CreatedDate", entity.CreatedDate);
             conn.Open(); cmd.ExecuteNonQuery();
         }
 
-        public void Update(IMRCumulative entity)
+        public void Update(IMIRCumulative entity)
         {
             using var conn = new SqlConnection(_connectionString);
             using var cmd = new SqlCommand("sp_UpdateIMRCumulative", conn) { CommandType = CommandType.StoredProcedure };
-            cmd.Parameters.AddWithValue("@ImrCumulativeId", entity.ImrCumulativeId);
-            cmd.Parameters.AddWithValue("@ImrId", entity.ImrId);
+            cmd.Parameters.AddWithValue("@ImrCumulativeId", entity.ImirCumulativeId);
+            cmd.Parameters.AddWithValue("@ImrId", entity.ImirId);
             cmd.Parameters.AddWithValue("@Quantity", entity.Quantity);
             cmd.Parameters.AddWithValue("@Remarks", (object?)entity.Remarks ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@CreatedDate", entity.CreatedDate);

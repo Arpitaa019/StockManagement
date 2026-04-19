@@ -1,10 +1,10 @@
-@model IEnumerable<StockManagement.Entity.IMRCumulative>
+@model IEnumerable<StockManagement.Entity.IMIRCumulative>
 
 @{
     ViewBag.Title = "IMR Cumulative";
 }
 
-<h2>IMR Cumulative</h2>
+    <h2>IMIR Cumulative</h2>
 <p><a href="@Url.Action("Create")" class="btn btn-primary">+ New Entry</a></p>
 
 <table class="table table-striped">
@@ -24,14 +24,14 @@
         {
             <tr>
                 <td>@i++</td>
-                <td>@item.ImrId</td>
+                <td>@item.ImirId</td>
                 <td>@item.Quantity</td>
                 <td>@item.Remarks</td>
                 <td>@item.CreatedDate.ToString("yyyy-MM-dd HH:mm")</td>
                 <td>
-                    <a href="@Url.Action("Details", new { id = item.ImrCumulativeId })" class="btn btn-sm btn-info">Details</a>
-                    <a href="@Url.Action("Edit", new { id = item.ImrCumulativeId })" class="btn btn-sm btn-warning">Edit</a>
-                    <a href="@Url.Action("Delete", new { id = item.ImrCumulativeId })" class="btn btn-sm btn-danger">Delete</a>
+                    <a href="@Url.Action("Details", new { id = item.ImirCumulativeId })" class="btn btn-sm btn-info">Details</a>
+                    <a href="@Url.Action("Edit", new { id = item.ImirCumulativeId })" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="@Url.Action("Delete", new { id = item.ImirCumulativeId })" class="btn btn-sm btn-danger">Delete</a>
                 </td>
             </tr>
         }

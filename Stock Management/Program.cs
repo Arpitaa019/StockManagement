@@ -41,9 +41,9 @@ builder.Services.AddScoped<IRFPInfoService, RFPInfoService>();
 builder.Services.AddScoped<IRFQInfoRepository>(_ => new RFQInfoRepository(connectionString));
 builder.Services.AddScoped<IRFQInfoService, RFQInfoService>();
 
-// IMRCumulative
-builder.Services.AddScoped<IIMRCumulativeRepository>(_ => new ImirRepository(connectionString));
-builder.Services.AddScoped<IIMRCumulativeService, IMRCumulativeService>();
+// IMIRCumulative (Imir) - cumulative records for inspected/approved items
+builder.Services.AddScoped<IIMIRCumulativeRepository>(_ => new ImirRepository(connectionString));
+builder.Services.AddScoped<IIMIRCumulativeService, IMIRCumulativeService>();
 
 // InvoiceInfo
 builder.Services.AddScoped<IInvoiceInfoRepository>(_ => new InvoiceInfoRepository(connectionString));
