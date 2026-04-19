@@ -1,0 +1,41 @@
+@model IEnumerable<StockManagement.Entity.DMRMaster>
+
+@{
+    ViewBag.Title = "DMR List";
+}
+
+<h2>DMR List</h2>
+<p><a href="@Url.Action("Create")" class="btn btn-primary">+ New DMR</a></p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Vendor</th>
+            <th>Delivery Date</th>
+            <th>Approved By</th>
+            <th>Finalized</th>
+            <th>Remarks</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ int i = 1; }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@i++</td>
+                <td>@item.VendorId</td>
+                <td>@item.DeliveryDate.ToString("yyyy-MM-dd")</td>
+                <td>@item.ApprovedBy</td>
+                <td>@(item.IsFinalized ? "Yes" : "No")</td>
+                <td>@item.Remarks</td>
+                <td>
+                    <a href="@Url.Action("Details", new { id = item.DmrId })" class="btn btn-sm btn-info">Details</a>
+                    <a href="@Url.Action("Edit", new { id = item.DmrId })" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="@Url.Action("Delete", new { id = item.DmrId })" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

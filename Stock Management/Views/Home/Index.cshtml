@@ -6,3 +6,76 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+<div class="mt-4">
+    <h3>Main Menu</h3>
+    <div class="row">
+        <div class="col-md-3 mb-3">
+            <a class="card text-decoration-none text-dark" href="@Url.Action("Index", "Product")">
+                <div class="card-body">
+                    <h5 class="card-title">Products</h5>
+                    <p class="card-text">Manage products</p>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3 mb-3">
+            <a class="card text-decoration-none text-dark" href="@Url.Action("Index", "Vendors")">
+                <div class="card-body">
+                    <h5 class="card-title">Vendors</h5>
+                    <p class="card-text">Vendor master</p>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3 mb-3">
+            <a class="card text-decoration-none text-dark" href="@Url.Action("Index", "Sapcode")">
+                <div class="card-body">
+                    <h5 class="card-title">Sap Codes</h5>
+                    <p class="card-text">SAP code list</p>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3 mb-3">
+            <a class="card text-decoration-none text-dark" href="@Url.Action("Index", "PurchaseRequest")">
+                <div class="card-body">
+                    <h5 class="card-title">Purchase Requests</h5>
+                    <p class="card-text">Create and approve requests</p>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3 mb-3">
+            <a class="card text-decoration-none text-dark" href="@Url.Action("Index", "PurchaseOrder")">
+                <div class="card-body">
+                    <h5 class="card-title">Purchase Orders</h5>
+                    <p class="card-text">Manage purchase orders</p>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3 mb-3">
+            <a class="card text-decoration-none text-dark" href="@Url.Action("Index", "Invoice")">
+                <div class="card-body">
+                    <h5 class="card-title">Invoices</h5>
+                    <p class="card-text">Invoice entry & review</p>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3 mb-3">
+            <a class="card text-decoration-none text-dark" href="@Url.Action("Index", "IMRCumulative")">
+                <div class="card-body">
+                    <h5 class="card-title">IMIR (Cumulative)</h5>
+                    <p class="card-text">Inspected material cumulative</p>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-3 mb-3">
+            <a class="card text-decoration-none text-dark" href="@Url.Action("Index", "DMR")">
+                <div class="card-body">
+                    <h5 class="card-title">DMR</h5>
+                    <p class="card-text">Daily material reports</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

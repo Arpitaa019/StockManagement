@@ -1,0 +1,89 @@
+@model StockManagement.Entity.DMRMaster
+
+@{
+    ViewBag.Title = "DMR Details";
+    var details = ViewBag.Details as IEnumerable<StockManagement.Entity.DmrDetails> ?? Enumerable.Empty<StockManagement.Entity.DmrDetails>();
+}
+
+<h2>DMR Details</h2>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Vendor</dt>
+            <dd class="col-sm-9">@Model.VendorId</dd>
+
+            <dt class="col-sm-3">Delivery Date</dt>
+            <dd class="col-sm-9">@Model.DeliveryDate.ToString("yyyy-MM-dd")</dd>
+
+            <dt class="col-sm-3">Approved By</dt>
+            <dd class="col-sm-9">@Model.ApprovedBy</dd>
+
+            <dt class="col-sm-3">Finalized</dt>
+            <dd class="col-sm-9">@(Model.IsFinalized ? "Yes" : "No")</dd>
+
+            <dt class="col-sm-3">Remarks</dt>
+            <dd class="col-sm-9">@Model.Remarks</dd>
+        </dl>
+    </div>
+</div>
+
+<h4>Details</h4>
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ int i = 1; }
+        @foreach (var d in details)
+        {
+            <tr>
+                <td>@i++</td>
+                <td>@d.ProductId</td>
+                <td>@d.Quantity</td>
+                <td>@d.Status</td>
+                <td>
+                    @using (Html.BeginForm("RemoveDetail", "DMR", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.Hidden("id", d.DmrDetailId)
+                        @Html.Hidden("dmrId", Model.DmrId)
+                        <button type="submit" class="btn btn-sm btn-danger">Remove</button>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h4>Add Detail</h4>
+@using (Html.BeginForm("AddDetail", "DMR", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.DmrId)
+    <div class="row">
+        <div class="col-md-3">
+            @Html.Label("ProductId")
+            @Html.TextBox("ProductId", null, new { @class = "form-control", type = "number" })
+        </div>
+        <div class="col-md-3">
+            @Html.Label("Quantity")
+            @Html.TextBox("Quantity", null, new { @class = "form-control", type = "number" })
+        </div>
+        <div class="col-md-3">
+            @Html.Label("Status")
+            @Html.TextBox("Status", null, new { @class = "form-control" })
+        </div>
+        <div class="col-md-3 mt-4">
+            <input type="submit" value="Add" class="btn btn-primary" />
+        </div>
+    </div>
+}
+
+<p class="mt-3"><a href="@Url.Action("Index")" class="btn btn-secondary">Back</a></p>

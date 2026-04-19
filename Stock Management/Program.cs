@@ -17,9 +17,7 @@ builder.Services.AddControllersWithViews();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
     ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
-// Product
-builder.Services.AddScoped<IProductRepository>(_ => new ProductRepository(connectionString));
-builder.Services.AddScoped<IProductService, ProductService>();
+
 
 // Employee
 builder.Services.AddScoped<IEmployeeRepository>(_ => new EmployeeRepository(connectionString));

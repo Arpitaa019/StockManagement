@@ -1,0 +1,27 @@
+@model StockManagement.Entity.DMRMaster
+
+@{
+    ViewBag.Title = "Delete DMR";
+}
+
+<h2>Delete DMR</h2>
+
+<div class="alert alert-danger">Are you sure you want to delete this DMR?</div>
+<dl class="row">
+    <dt class="col-sm-3">Vendor</dt>
+    <dd class="col-sm-9">@Model.VendorId</dd>
+
+    <dt class="col-sm-3">Delivery Date</dt>
+    <dd class="col-sm-9">@Model.DeliveryDate.ToString("yyyy-MM-dd")</dd>
+
+    <dt class="col-sm-3">Remarks</dt>
+    <dd class="col-sm-9">@Model.Remarks</dd>
+</dl>
+
+@using (Html.BeginForm("Delete", "DMR", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.DmrId)
+    <input type="submit" value="Delete" class="btn btn-danger" />
+    <a href="@Url.Action("Index")" class="btn btn-secondary">Cancel</a>
+}
