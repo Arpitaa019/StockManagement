@@ -15,6 +15,11 @@ namespace Stock_Management.Controllers
             _prService = prService;
         }
 
+        // GET: PurchaseOrder/PRDetails/5
+        // Shows the Purchase Request linked to this PO and allows approval
+
+      
+
         // GET: PurchaseOrder
         public ActionResult Index()
         {

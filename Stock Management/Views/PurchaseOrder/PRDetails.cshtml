@@ -1,0 +1,69 @@
+@model StockManagement.Core.PurchaseRequestMaster
+
+@{
+    ViewBag.Title = "Purchase Request Details";
+    var poId = ViewBag.POId as int? ?? 0;
+}
+
+<h2>Purchase Request Details (PO: @poId)</h2>
+
+<dl class="row">
+    <dt class="col-sm-3">PR Number</dt>
+    <dd class="col-sm-9">@Model.PRNumber</dd>
+
+    <dt class="col-sm-3">Request Date</dt>
+    <dd class="col-sm-9">@Model.RequestDate.ToString("yyyy-MM-dd")</dd>
+
+    <dt class="col-sm-3">Requested By</dt>
+    <dd class="col-sm-9">@Model.RequestedBy</dd>
+
+    <dt class="col-sm-3">Department</dt>
+    <dd class="col-sm-9">@Model.Department</dd>
+
+    <dt class="col-sm-3">Status</dt>
+    <dd class="col-sm-9">@Model.Status</dd>
+
+    <dt class="col-sm-3">Remarks</dt>
+    <dd class="col-sm-9">@Model.Remarks</dd>
+</dl>
+
+<h4>Items</h4>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Item Code</th>
+            <th>Description</th>
+            <th>Quantity</th>
+            <th>UOM</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ int i = 1; }
+        @foreach(var item in Model.Items)
+        {
+            <tr>
+                <td>@i++</td>
+                <td>@item.ItemCodeNo</td>
+                <td>@item.Description</td>
+                <td>@item.Quantity</td>
+                <td>@item.UnitOfMeasure</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@using (Html.BeginForm("PRDetails", "PurchaseOrder", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.Hidden("poId", poId)
+    @Html.Hidden("prId", Model.PRId)
+    <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" value="true" id="Approved" name="Approved" @(Model.Status == "Approved" ? "checked" : "") />
+        <label class="form-check-label" for="Approved">Approved</label>
+    </div>
+    <div>
+        <input type="submit" value="Save" class="btn btn-primary" />
+        <a href="@Url.Action("Details", "PurchaseOrder", new { id = poId })" class="btn btn-secondary">Back</a>
+    </div>
+}
