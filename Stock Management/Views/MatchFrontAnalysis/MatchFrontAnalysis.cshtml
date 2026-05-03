@@ -1,0 +1,277 @@
+﻿@model IEnumerable<StockManagement.Core.Line>
+
+@{
+    ViewData["Title"] = "Match Front Analysis";
+}
+
+<style>
+    .mfa-container { display:flex; height:82vh; font-family:Segoe UI, Roboto, Arial; border:1px solid #e6e6e6; border-radius:8px; overflow:hidden; font-size:13px; }
+    .mfa-left { width:300px; border-right:1px solid #e3e3e3; overflow:auto; padding:6px; background:#fbfbfd; }
+    .mfa-right { flex:1; padding:8px; display:flex; flex-direction:column; gap:8px; position:relative; }
+    .mfa-top { flex:0 0 38%; border-bottom:1px solid #e9ecef; padding:12px; background:#fff; border-radius:6px; box-shadow:0 1px 3px rgba(0,0,0,0.04); overflow:auto }
+    .mfa-grid-mid { flex:0 0 30%; padding:12px; background:#fff; border-radius:6px; box-shadow:0 1px 3px rgba(0,0,0,0.04); overflow:auto }
+    .mfa-bottom { flex:0 0 22%; padding:10px; background:#fff; border-radius:6px; box-shadow:0 1px 3px rgba(0,0,0,0.04); }
+    .mfa-actions { position:absolute; right:12px; bottom:12px; display:flex; gap:10px; }
+    .tree-node { cursor:pointer; display:flex; align-items:center; gap:8px; padding:6px 8px; border-radius:4px; }
+    .tree-node:hover { background:#f1f5fb; }
+    .toggle-icon { font-weight:600; display:inline-block; width:18px; text-align:center; }
+    .line-label { font-size:14px; display:inline-block; width:160px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .spool-label { font-size:13px; color:#064; }
+    .component-label { font-size:13px; color:#333; }
+    .indent { margin-left:14px; }
+    .selected-node { background: linear-gradient(90deg,#e6f0ff,#ffffff); border-left:3px solid #0b5ed7; }
+    /* toggle icon: + when collapsed, − when expanded */
+    .toggle-btn.collapsed .toggle-icon::before { content: '+'; }
+    .toggle-btn:not(.collapsed) .toggle-icon::before { content: '\2212'; }
+    /* remove default accordion caret */
+    .accordion-button::after { display:none !important; }
+    .status-box { display:inline-block; width:14px; height:14px; border-radius:3px; margin-right:8px; vertical-align:middle; }
+    .status-green { background:#28a745; color:#fff; }
+    .status-yellow { background:#ffc107; color:#111; }
+    .status-red { background:#dc3545; color:#fff; }
+    .left-line-label { display:inline-block; padding:6px 8px; border-radius:4px; }
+    .toolbar { background:#f1f3f5; padding:10px 12px; border-bottom:1px solid #e6e6e6; margin-bottom:8px; border-radius:6px; }
+    .summary-grid td, .summary-grid th { padding:6px 8px; }
+</style>
+
+<div class="mfa-container">
+    <div class="mfa-left">
+        <h5 class="mb-2">Lines</h5>
+        <div class="toolbar">
+            <div style="display:flex;gap:8px;align-items:center;">
+                <label style="margin:0;">Spool Possibility :</label>
+                <select class="form-select form-select-sm" style="width:180px;">
+                    <option>Completely Possible</option>
+                    <option>Partially Possible</option>
+                    <option>Not Possible</option>
+                </select>
+                <button class="btn btn-sm btn-light" title="Sort">A↕Z</button>
+            </div>
+        </div>
+
+        <div class="accordion" id="linesAccordion">
+            @foreach(var line in Model)
+            {
+                var lineId = "line-" + line.LineId;
+                // compute a sample status to color lines: rotate values to produce green/yellow/red
+                var statusClass = (line.LineId % 3 == 0) ? "status-green" : (line.LineId % 3 == 1) ? "status-yellow" : "status-red";
+                <div class="accordion-item mb-2">
+                    <h2 class="accordion-header" id="heading-@lineId">
+                        <button class="accordion-button collapsed toggle-btn tree-node" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@lineId" aria-expanded="false" aria-controls="collapse-@lineId">
+                            <span class="status-box @statusClass"></span>
+                            <span class="left-line-label">LineId: @line.Name</span>
+                        </button>
+                    </h2>
+                    <div id="collapse-@lineId" class="accordion-collapse collapse" aria-labelledby="heading-@lineId" data-bs-parent="#linesAccordion">
+                        <div class="accordion-body p-2">
+                            <ul class="list-unstyled">
+                                @foreach(var spool in line.Spools)
+                                {
+                                    var spoolId = "spool-" + spool.SpoolId;
+                                    <li>
+                                        <div class="d-flex align-items-center">
+                                            <button class="btn btn-sm toggle-btn collapsed tree-node" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@spoolId" aria-expanded="false" aria-controls="collapse-@spoolId">
+                                                <span class="toggle-icon"></span>
+                                                <span class="spool-label">@spool.SpoolNumber</span>
+                                            </button>
+                                        </div>
+                                        <div id="collapse-@spoolId" class="collapse indent mt-1">
+                                            <ul class="list-unstyled">
+                                                @* If spool has joints, show joints; otherwise show components *@
+                                                @if (spool.Joints != null && spool.Joints.Any())
+                                                {
+                                                    foreach(var joint in spool.Joints)
+                                                    {
+                                                        <li>
+                                                            <div class="tree-node component-label" data-jointid="@joint.JointId" data-part1="@joint.Part1ComponentId" data-part2="@joint.Part2ComponentId" onclick="selectJoint(this)">
+                                                                <span style="width:18px;display:inline-block"></span>
+                                                                <span> @joint.JointNumber </span>
+                                                            </div>
+                                                        </li>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    foreach(var comp in spool.Components)
+                                                    {
+                                                        <li>
+                                                            <div class="tree-node component-label" data-compid="@comp.ComponentId" onclick="selectComponent(this)">
+                                                                <span style="width:18px;display:inline-block"></span>
+                                                                <span> @comp.ItemCodeNo </span>
+                                                            </div>
+                                                        </li>
+                                                    }
+                                                }
+                                            </ul>
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+        <!-- Analyze button moved to action area to match Save/Cancel placement -->
+    <div class="mfa-right">
+        
+           
+            <div id="detailBody">
+                <table class="table table-sm table-striped" id="topTable">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Line No</th>
+                            <th>Spool Name</th>
+                            <th>Components</th>
+                            <th>Joints</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        
+
+
+            <table class="table table-sm" id="midTable">
+                <thead>
+                    <tr><th>Spool</th><th>Possible/NotPossible</th><th>Remarks</th></tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+    
+
+        <div class="mfa-bottom" id="jointsPanel">
+            <h6>Summary</h6>
+            <div id="jointsBody">Joints will be displayed here after analysis</div>
+        </div>
+        <div class="mfa-actions">
+            <button id="analyzeNow" class="btn btn-primary btn-sm" onclick="analyzeAll()">Analyze</button>
+            <button id="saveAnalysis" class="btn btn-success btn-sm">Save</button>
+            <button id="cancelAnalysis" class="btn btn-secondary btn-sm">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // serialize spools data for client-side rendering
+    var spoolsData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.SelectMany(l => l.Spools, (l, s) => new {
+        LineId = l.LineId,
+        LineName = l.Name,
+        SpoolId = s.SpoolId,
+        SpoolNumber = s.SpoolNumber,
+        Components = s.Components.Select(c => new { c.ComponentId, c.ItemCodeNo }).ToList(),
+        Joints = s.Joints.Select(j => new { j.JointId, j.JointNumber, Part1 = j.Part1ComponentId, Part2 = j.Part2ComponentId }).ToList()
+    })));
+
+    function selectComponent(el) {
+        var compId = el.getAttribute('data-compid');
+        var compText = el.innerText.trim();
+
+        // highlight selection
+        document.querySelectorAll('.tree-node').forEach(n => n.classList.remove('selected-node'));
+        el.classList.add('selected-node');
+
+        document.getElementById('detailTitle').innerText = compText;
+        document.getElementById('detailBody').innerText = 'Showing analysis for component id ' + compId + '\n\nPossible status:\n• Available\n• Not Available\n• Partial';
+
+        // For demo: display joints (if any) from the rendered model by searching for Joint entries in the DOM (our static repo doesn't render joints list in tree)
+        document.getElementById('jointsBody').innerHTML = '<div class="text-muted">No joint data available in demo. Implement an API to fetch joints for component.</div>';
+    }
+
+    function selectJoint(el) {
+        var jointId = el.getAttribute('data-jointid');
+        var jointText = el.innerText.trim();
+
+        // highlight selection
+        document.querySelectorAll('.tree-node').forEach(n => n.classList.remove('selected-node'));
+        el.classList.add('selected-node');
+
+        document.getElementById('detailTitle').innerText = jointText;
+        document.getElementById('detailBody').innerText = 'Showing analysis for joint id ' + jointId + '\n\nPossible status:\n• OK\n• Needs Repair\n• Replaced';
+
+        document.getElementById('jointsBody').innerHTML = '<div><strong>Joint details</strong></div><ul><li>Joint ID: ' + jointId + '</li><li>Status: <span style="color:green">OK</span></li></ul>';
+    }
+</script>
+<script>
+    function analyzeAll() {
+        // perform spool-wise analysis then joint-wise analysis using spoolsData
+        var spoolResults = [];
+        var jointResults = [];
+
+        // clear previous tables
+        document.querySelectorAll('.badge-status').forEach(b => b.remove());
+        var topBody = document.querySelector('#topTable tbody'); topBody.innerHTML = '';
+        var midBody = document.querySelector('#midTable tbody'); midBody.innerHTML = '';
+
+        spoolsData.forEach(function(s, idx) {
+            var compCount = s.Components ? s.Components.length : 0;
+            var jointCount = s.Joints ? s.Joints.length : 0;
+            var spoolName = s.SpoolNumber;
+            var lineName = s.LineName;
+
+            // Determine status: completely (green), partially (yellow), not possible (red)
+            var statusText = compCount >= 4 ? 'Completely Possible' : (compCount > 0 ? 'Partially Possible' : 'Not Possible');
+            spoolResults.push({ spool: spoolName, status: statusText, components: compCount, line: lineName });
+
+            // add top table row
+            var tr = document.createElement('tr');
+            tr.innerHTML = '<td>' + (idx+1) + '</td><td>' + lineName + '</td><td>' + spoolName + '</td><td>' + compCount + '</td><td>' + jointCount + '</td><td>' + statusText + '</td>';
+            if (statusText === 'Completely Possible') tr.style.backgroundColor = '#e6ffed';
+            else if (statusText === 'Partially Possible') tr.style.backgroundColor = '#fff8e1';
+            else tr.style.backgroundColor = '#ffe6e6';
+            topBody.appendChild(tr);
+
+            // joint-wise analysis
+            if (s.Joints && s.Joints.length) {
+                s.Joints.forEach(function(j){
+                    var hasP1 = s.Components.some(c => String(c.ComponentId) === String(j.Part1));
+                    var hasP2 = s.Components.some(c => String(c.ComponentId) === String(j.Part2));
+                    var jstatus = (hasP1 && hasP2) ? 'OK' : (hasP1 || hasP2 ? 'Partial' : 'Needs Review');
+                    jointResults.push({ joint: j.JointNumber, status: jstatus });
+
+                    var trm = document.createElement('tr');
+                    trm.innerHTML = '<td>' + spoolName + '</td><td>' + jstatus + '</td><td>' + (jstatus === 'OK' ? 'All Joints Are Effective' : (jstatus === 'Partial' ? 'Partial components present' : 'Missing components')) + '</td>';
+                    if (jstatus === 'OK') trm.style.backgroundColor = '#e6ffed';
+                    else if (jstatus === 'Partial') trm.style.backgroundColor = '#fff8e1';
+                    else trm.style.backgroundColor = '#ffe6e6';
+                    midBody.appendChild(trm);
+                });
+            } else {
+                var trm = document.createElement('tr');
+                trm.innerHTML = '<td>' + spoolName + '</td><td>Not Possible</td><td>No joints are available</td>';
+                trm.style.backgroundColor = '#ffe6e6';
+                midBody.appendChild(trm);
+            }
+        });
+
+        // summary
+        var totalSpools = spoolsData.length;
+        var totalLines = (new Set(spoolsData.map(s => s.LineId))).size;
+        var completely = spoolResults.filter(s => s.status === 'Completely Possible').length;
+        var partially = spoolResults.filter(s => s.status === 'Partially Possible').length;
+        var notPossible = spoolResults.filter(s => s.status === 'Not Possible').length;
+        var totalJoints = spoolsData.reduce((sum,s) => sum + (s.Joints ? s.Joints.length : 0), 0);
+
+        var summaryHtml = '<table class="summary-grid"><tr><th>Considered MFA Lines</th><td>' + totalLines + '</td><th>Total Lines</th><td>' + totalLines + '</td></tr>';
+        summaryHtml += '<tr><th>Not Possible Lines</th><td>' + notPossible + '</td><th>Total No of Spools</th><td>' + totalSpools + '</td></tr>';
+        summaryHtml += '<tr><th>Partially Possible Lines</th><td>' + partially + '</td><th>Completely Possible Spools</th><td>' + completely + '</td></tr>';
+        summaryHtml += '<tr><th>Completely Possible Lines</th><td>' + completely + '</td><th>Total No of Joints</th><td>' + totalJoints + '</td></tr></table>';
+
+        document.getElementById('jointsBody').innerHTML = summaryHtml;
+    }
+</script>
+<script>
+    // Add collapse listeners to update toggle-btn collapsed state (Bootstrap toggles class automatically on button; this ensures icon updates)
+    document.addEventListener('DOMContentLoaded', function () {
+        // Use event delegation for accordion buttons
+        document.querySelectorAll('.toggle-btn').forEach(function(btn) {
+            // bootstrap will toggle collapsed class automatically; ensure icon displayed correctly by forcing repaint
+            btn.addEventListener('click', function () {
+                setTimeout(function() { /* allow collapse to toggle */ }, 1);
+            });
+        });
+    });
+</script>

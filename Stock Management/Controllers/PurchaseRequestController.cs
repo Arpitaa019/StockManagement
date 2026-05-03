@@ -7,8 +7,7 @@ namespace Stock_Management.Controllers
     public class PurchaseRequestController : Controller
     {
         private readonly IPurchaseRequestService _service;
-        private readonly ISapcodeService _sapService;
-        public PurchaseRequestController(IPurchaseRequestService service, ISapcodeService sapService) { _service = service; _sapService = sapService; }
+        public PurchaseRequestController(IPurchaseRequestService service) { _service = service; }
 
         // GET: PurchaseRequest
         public ActionResult Index()
@@ -27,16 +26,14 @@ namespace Stock_Management.Controllers
         // GET: PurchaseRequest/Create
         public ActionResult Create()
         {
-            var model = new PurchaseRequestMaster
+            return View(new PurchaseRequestMaster
             {
-                RequestDate = DateTime.Today,
-                CreatedDate = DateTime.Today,
+                RequestDate  = DateTime.Today,
+                CreatedDate  = DateTime.Today,
                 ModifiedDate = DateTime.Today,
-                Status = "Pending",
-                Items = new List<PurchaseRequestDetails> { new PurchaseRequestDetails() }
-            };
-            ViewBag.Sapcodes = _sapService.GetAll();
-            return View(model);
+                Status       = "Pending",
+                Items        = new List<PurchaseRequestDetails> { new PurchaseRequestDetails() }
+            });
         }
 
         // POST: PurchaseRequest/Create
@@ -47,11 +44,7 @@ namespace Stock_Management.Controllers
             pr.Items = pr.Items?.Where(i => !string.IsNullOrWhiteSpace(i.ItemCodeNo)).ToList()
                        ?? new List<PurchaseRequestDetails>();
 
-            if (!ModelState.IsValid)
-            {
-                ViewBag.Sapcodes = _sapService.GetAll();
-                return View(pr);
-            }
+            if (!ModelState.IsValid) return View(pr);
 
             pr.CreatedDate  = DateTime.Now;
             pr.ModifiedDate = DateTime.Now;
@@ -66,7 +59,6 @@ namespace Stock_Management.Controllers
             if (pr == null) return NotFound();
             if (!pr.Items.Any())
                 pr.Items.Add(new PurchaseRequestDetails());
-            ViewBag.Sapcodes = _sapService.GetAll();
             return View(pr);
         }
 
@@ -78,11 +70,7 @@ namespace Stock_Management.Controllers
             pr.Items = pr.Items?.Where(i => !string.IsNullOrWhiteSpace(i.ItemCodeNo)).ToList()
                        ?? new List<PurchaseRequestDetails>();
 
-            if (!ModelState.IsValid)
-            {
-                ViewBag.Sapcodes = _sapService.GetAll();
-                return View(pr);
-            }
+            if (!ModelState.IsValid) return View(pr);
 
             pr.PRId          = pr.PRId > 0 ? pr.PRId : id;
             pr.ModifiedDate  = DateTime.Now;

@@ -1,0 +1,26 @@
+/* Global app styles (placeholder) - created to resolve 404 and provide default styling
+   You can customize further as needed. */
+:root{
+  --brand-color:#0d6efd;
+  --muted:#6c757d;
+  --bg:#ffffff;
+}
+html,body{height:100%;margin:0;font-family:Segoe UI, Roboto, Arial, sans-serif;background:#f8f9fa;color:#212529}
+a{color:var(--brand-color)}
+.navbar-brand{font-weight:600}
+
+/* Buttons */
+.btn-primary{background:var(--brand-color);border-color:var(--brand-color)}
+
+/* Match Front Analysis specific tweaks */
+.mfa-left{background:#fbfbfd}
+.mfa-right .mfa-top{background:#fff}
+
+/* Small forms */
+.form-control{border-radius:4px}
+
+/* Utility */
+.text-muted{color:var(--muted)}
+
+/* Ensure main container doesn't overflow on small screens */
+.container, .mfa-container{max-width:1200px;margin:0 auto}

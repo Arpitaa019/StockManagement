@@ -73,6 +73,10 @@ builder.Services.AddScoped<IPurchaseRequestService, PurchaseRequestService>();
 builder.Services.AddScoped<IPurchaseOrderRepository>(_ => new PurchaseOrderRepository(connectionString));
 builder.Services.AddScoped<IPurchaseOrderService, PurchaseOrderService>();
 
+// Material Allocation (Lines/Spools/Components) - static for now
+builder.Services.AddScoped<ILineRepository, StockManagement.Repository.LineRepository>();
+builder.Services.AddScoped<ILineService, StockManagement.Service.LineService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -93,6 +97,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
 name: "default",
-pattern: "{controller=Product}/{action=Index}/{id?}");
+pattern: "{controller=MatchFrontAnalysis}/{action=MatchFrontAnalysis}/{id?}");
 
 app.Run();
